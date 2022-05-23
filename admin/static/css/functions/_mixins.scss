@@ -1,0 +1,29 @@
+@mixin flex($direction: row, $justify: initial, $align:initial) {
+
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+
+}
+
+@mixin margin-x($number) {
+
+    margin-left: space($number);
+    margin-right: space($number);
+
+}
+
+@mixin normalize-link() {
+
+    color: color(light-black);
+    text-decoration: none;
+
+}
+
+@mixin padding-x($number) {
+
+    padding-left: $number;
+    padding-right: $number;
+    
+}

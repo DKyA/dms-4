@@ -1,0 +1,70 @@
+@function color($color: 'black') {
+
+    @return map-get((
+
+        'white': #ffffff,
+        'black': #000000,
+        'llgrey': #eee,
+        'mid-grey': #C4C4C4,
+        'success': #28a745,
+        'danger': #dc3545,
+        'blue': #1a80ee,
+        'dark-success': darken(#28a745, 13%),
+        'light-black': #222,
+        'dimmed': #aaa,
+        'info': #666,
+        'cyan': rgb(0, 174, 197),
+        'facebook': #4267B2,
+        'twitter': #1DA1F2,
+        'instagram': #C13584,
+        'linkedin': #0077B5,
+        'google': #d34836,
+        'booking': #003580,
+        'telegram': #0088cc,
+        'messenger': #0084ff,
+        'tripadvisor': #00af87,
+        'close': #C3523F,
+
+    ), $color);
+
+}
+
+@function space($multiply: '1') {
+
+    @return 8px * $multiply;
+
+}
+
+@function breakpoint($code: 'sm') {
+
+    @return map-get((
+
+        'xs': 396px,
+        'sm': 576px,
+        'md': 768px,
+        'lg': 992px,
+        'xl': 1200px,
+        'xxl': 1400px
+
+    ), $code);
+
+}
+
+@function z($specify: 'normal') {
+
+    @return map-get((
+
+        'normal': 0,
+        'bg-1': -2,
+        'bg-2': -3,
+        'bg-3': -4,
+        'bg-4': -5,
+
+        'fg-1': 2,
+        'fg-2': 3,
+        'fg-3': 4,
+        'fg-4': 5,
+
+    ), $specify)
+
+}
