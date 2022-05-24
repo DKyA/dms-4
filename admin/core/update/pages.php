@@ -18,13 +18,22 @@ require_once $path["core"] . "base.php";
 ';
 });
 
+$special_prefill = (function() {
+    global $path;
+    $file = "{$path['static']}docs/special_confs.txt";
+    $fin = fopen($file, 'r');
+    $res = fread($fin, filesize($file));
+    fclose($fin);
+    return $res;
+})();
+
 foreach ($statement as $row) {
     if (!$row['autoplace']) continue;
     if (is_dir($dir . $row['ref'])) continue;
     if ($row['special']) {
-        $dir = $path['core'] . 'specials/pages/';
+        $dir = $path['core'] . 'specials/confs/';
         $file = fopen($dir . $row['ref'], 'w');
-        // fwrite($file, $init_text($row['ref']));
+        fwrite($file, $special_prefill);
         fclose($file);
         continue;
     }

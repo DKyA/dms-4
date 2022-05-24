@@ -1,0 +1,19 @@
+<?php
+
+/*
+
+Structure:
+
+'unique id key' => [
+    'component' => 'component to by inserted',
+    'data' => 'text to be used on the page',
+    'attributes' => >['specials' => 'to be also', 'accessible' => 'on the page'],
+    'subcomponents' => [
+        'recursively nest more.'
+    ],
+];
+
+$template = 'basic template to start of with. May help with structure. Default is none.';
+//options: blob_middle
+
+*/
