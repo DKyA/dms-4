@@ -21,6 +21,7 @@ class PAGE_INFO {
         $this -> initialise();
     }
 
+    // Shortcuts
     private function initialise() {
         $this -> id = $this -> info['id'];
         $this -> ref = $this -> info['ref'];
