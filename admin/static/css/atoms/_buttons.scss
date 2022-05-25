@@ -25,8 +25,20 @@
 
             background-color: color(dark-success);
             color: color('white');
+
             @include padding-x(space(4));
+
             border-radius: space(1);
+
+            width: 100%;
+
+            transition: .15s ease-in-out;
+
+            &:hover, &:focus {
+
+                background-color: darken(color(success), 8%);
+
+            }
 
         }
 

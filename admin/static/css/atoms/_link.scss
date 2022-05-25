@@ -1,16 +1,28 @@
 .a-link {
 
-    font-size: inherit;
-    color: color('black');
-    text-decoration: none;
+    width: 100%;
+    @include flex(row, flex-end, center);
 
-    &--footnote {
+    &__self {
 
-        font-size: .85em;
-        color: color(info);
-        padding: space(1);
+        font-size: inherit;
+        color: color('black');
+        text-decoration: none;
 
-        
+        &--footnote {
+
+            font-size: .85em;
+            color: color(info);
+            padding: space(1);
+            transition: color .15s ease-in-out .3s;
+
+            &:hover, &:focus {
+
+                color: color('black');
+
+            }
+
+        }
 
     }
 

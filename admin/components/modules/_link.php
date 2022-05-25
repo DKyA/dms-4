@@ -9,8 +9,10 @@ $nested => další komponenty
 */
 ?>
 
-<a href="<?=$attributes['href']?>" <?=$attributes['rel']?> class="a-link a-link<?=$attributes['class']?>"><?=$data[0]?>
-<?php
-    apply_modules($modules);
-?>
-</a>
+<div class="a-link">
+    <a <?=$attributes['href']?> <?=$attributes['rel']?> class="a-link__self a-link__self<?=$attributes['class']?>"><?=$data[0]?>
+    <?php
+        apply_modules($modules);
+    ?>
+    </a>
+</div>
