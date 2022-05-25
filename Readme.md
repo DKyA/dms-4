@@ -5,3 +5,8 @@
 # Poučení
     - V podstatě obecně = 2x přemýšlet
     - Koncept se ale ukazuje být poměrně funkční.
+
+
+## TODO:
+    - Propojit tvoření komponent a informace o nich s databází
+    - Hlavně jde o to, jestli jsem nestable, nebo ne.

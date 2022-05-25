@@ -11,14 +11,13 @@ function apply_module($modules) {
 
         $file_info = (function($module) {
             global $path;
-            if ($module -> load_order) {
-                $component_file = $path['modules'] . $module -> element . '.php';
+            if (is_nestable($module)) {
+                $component_file = $path['modules'] . '_' . $module -> element . '.php';
                 $placeholder = doc_reader('new_component.txt');
                 return [$component_file, $placeholder];
             }
 
-            separate();
-            $component_file = $path['components'] .'submodules/' . $module -> element . '.php';
+            $component_file = $path['components'] .'submodules/_' . $module -> element . '.php';
             $placeholder = doc_reader('new_subcomponent.txt');
             return [$component_file, $placeholder];
 
@@ -32,6 +31,21 @@ function apply_module($modules) {
         require $file_info[0];
 
     }
+
+}
+
+
+
+function is_nestable($module) {
+
+    global $db;
+
+    $statement = $db -> prepare("SELECT nestable FROM component_list WHERE desc_db = :ide");
+    $statement -> bindValue(":ide", "c_{$module -> element}", PDO::PARAM_STR);
+    $statement -> execute();
+
+    $nestable = $statement -> fetch(PDO::FETCH_COLUMN);
+    return $nestable;
 
 }
 
