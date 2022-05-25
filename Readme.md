@@ -7,6 +7,7 @@
     - Koncept se ale ukazuje být poměrně funkční.
 
 
-## TODO:
-    - Propojit tvoření komponent a informace o nich s databází
-    - Hlavně jde o to, jestli jsem nestable, nebo ne.
+## Considerations - Forms:
+    - Security flaw: Je nesmysl pouštět všechny form inputy z jednoho místa a mít tak univerzální přístup
+    - Ano, je možné udělat dva uzavřené okruhy. Ale vždycky je potřeba si nějak uchovat a nezávisle ověřit ze které stránky to jede
+    - A jestli na to má uživatel pravomoc.
