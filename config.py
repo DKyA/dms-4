@@ -1,6 +1,6 @@
 import os
 
-def autostyle():
+def styleIt():
     root_dir = './admin/static/css/'
     dirs_raw = os.listdir(root_dir)
 
@@ -39,5 +39,6 @@ def autostyle():
         for one in all:
             file.writelines(f"@import './{one}/index';\n")
 
+    print("Styles updated successfully")
 
-autostyle()
+styleIt()
