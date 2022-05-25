@@ -1,0 +1,79 @@
+.c-form {
+
+    @include flex(column, space-between, center);
+
+    border-radius: space(2);
+
+    background-color: color('white');
+    box-shadow: $base_shadow;
+
+    width: 95%;
+
+    @media (min-width: breakpoint(sm)) {
+        width: 60%;
+        min-width: 400px;
+    }
+
+    @media (min-width: breakpoint(md)) {
+        width: 50%;
+    }
+
+    @media (min-width: breakpoint(lg)) {
+        max-width: 500px;
+    }
+
+
+    & > * {
+
+        padding: space(1) space(4);
+
+    }
+
+    &__headline {
+
+        width: 100%;
+        background-color: color(light-black);
+        color: color('white');
+        text-align: center;
+
+        padding: space(4);
+        border-radius: space(2) space(2) 0 0;
+
+    }
+
+    &__body {
+
+        @include flex(column, center, center);
+
+        width: 100%;
+
+    }
+
+}
+
+
+.c-input {
+
+    @include flex(column, center, center);
+    margin-top: space(2);
+    width: 100%;
+
+    &__label {
+
+        margin-bottom: space(0.5);
+        width: 100%;
+
+    }
+
+    &__field {
+
+        width: 100%;
+        padding: space(1) space(1) space(1) space(2);
+
+        border-radius: space(1);
+        border: 1.5px solid color(info);
+        color: color(info);
+        background-color: color(llgrey);
+    }
+
+}

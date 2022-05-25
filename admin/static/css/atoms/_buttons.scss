@@ -1,0 +1,35 @@
+.c-button {
+
+    width: 100%;
+    @include flex(column, center, center);
+    margin: space(2) 0;
+
+    &__self {
+
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: color('black');
+
+        padding: space(1) space(2);
+
+        cursor: pointer;
+
+    }
+
+    &--submit {
+
+        margin-top: space(4);
+
+        & > button {
+
+            background-color: color(dark-success);
+            color: color('white');
+            @include padding-x(space(4));
+            border-radius: space(1);
+
+        }
+
+    }
+
+}

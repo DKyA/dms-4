@@ -1,0 +1,21 @@
+.l-special {
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+
+    &--m-blob {
+
+        @include flex(column, center, center);
+
+    }
+
+    &__blob {
+
+        width: 100%;
+        @include flex(row, center, center);
+
+    }
+
+}

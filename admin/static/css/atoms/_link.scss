@@ -1,0 +1,17 @@
+.a-link {
+
+    font-size: inherit;
+    color: color('black');
+    text-decoration: none;
+
+    &--footnote {
+
+        font-size: .85em;
+        color: color(info);
+        padding: space(1);
+
+        
+
+    }
+
+}
