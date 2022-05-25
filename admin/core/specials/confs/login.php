@@ -23,6 +23,7 @@ $modules = [
     'login-form' => [
         'component' => 'form',
         'data' => ["$text[0] │ Přihlášení"],
+        'attributes' => ['method' => 'post', 'type' => 'login'],
         'subcomponents' => [
             'username' => [
                 'component' => 'input',

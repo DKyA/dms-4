@@ -9,4 +9,7 @@ $nested => další komponenty
 */
 ?>
 
-<?=$data[0]?>
+<div class="c-input">
+    <label for="<?=$id?>" class="c-input__label"><?=$data[0]?></label>
+    <input <?=$attributes['type']?> name="<?=$id?>" id='<?=$id?>' class="c-input__field c-input__field<?=$attributes['class']?>" <?=$attributes['placeholder']?> <?=$attributes['required']?>>
+</div>

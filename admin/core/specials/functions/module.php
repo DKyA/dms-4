@@ -23,7 +23,7 @@ class Module {
                 continue;
             }
             if ($att_k == 'attributes') {
-                $this -> attributes = $att_v;
+                $this -> attributes = $this -> inner_attributes($att_v);
                 continue;
             }
             if ($att_k == 'subcomponents') {
@@ -35,6 +35,49 @@ class Module {
             }
             $this -> others[$att_k] = $att_v;
         }
+    }
+
+    private function inner_attributes($attributes) {
+        $res = [
+            'class' => '',
+            'type' => '',
+            'rel' => '',
+            'target' => '',
+            'src' => '',
+            'width' => '',
+            'height' => '',
+            'id' => '', // Technicky vzato nepoužíváno. Ale může se stát, že budu potřebovat hodně custom id.
+            'method' => '',
+            'level' => ''
+        ];
+
+        foreach ($attributes as $k => $v) {
+
+            switch($k) {
+                case 'required':
+                    if ($v) {
+                        $res[$k] = $k;
+                    }
+                case 'type':
+                    $res['class'] = "--{$v}";
+                    $res[$k] = "{$k}='{$v}'";
+                case 'level':
+                    if ($v) {
+                        $res[$k] = $v;
+                    }
+                    else {
+                        $res[$k] = 1;
+                    }
+                case 'style' | 'class' | 'rel':
+                    $res[$k] = $v;
+                default:
+                    $res[$k] = "{$k}='{$v}'";
+            }
+
+        }
+
+        return $res;
+
     }
 
 }
