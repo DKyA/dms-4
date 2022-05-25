@@ -16,3 +16,12 @@ foreach ($modules as $key => $module) {
 
 require $path['core'] . 'apply_components.php';
 // Okej, tohle je potřeba trošku víc promyslet a to se mi nechce dělat po obědě... :()
+
+if ($PI -> info['special']) {
+    if (!isset($template)) {
+        $template = 'blob_middle';
+    }
+    $file = "{$path['components']}templates/{$template}.php";
+    creator($file , '<?php apply_module($layout);?>');
+    require $file;
+}

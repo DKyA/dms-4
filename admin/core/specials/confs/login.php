@@ -40,38 +40,12 @@ $modules = [
                 'attributes' => ['type' => 'submit'], 
             ],
             'forgot-password' => [
-                'type' => 'a',
+                'component' => 'a',
                 'data' => ['Zapomenuté heslo?'],
                 'attributes' => ['href' => '#', 'type' => 'footnote'],
             ]
         ]
     ],
-    'test-thing' => [
-        'component' => 'form',
-        'data' => ["$text[0] │ lasdjsl"],
-        'subcomponents' => [
-            'username' => [
-                'component' => 'input',
-                'data' => ['Uživatelské jméno'],
-                'attributes' => ['type' => 'text', 'placeholder' => 'Přihlašovací jméno', 'required' => True], 
-            ],
-            'password' => [
-                'component' => 'input',
-                'data' => ['Heslo'], 
-                'attributes' => ['type' => 'password', 'placeholder' => 'Vaše heslo', 'required' => True], 
-            ],
-            'submit' => [
-                'component' => 'button',
-                'data' => ['Přihlásit'], 
-                'attributes' => ['type' => 'submit'], 
-            ],
-            'forgot-password' => [
-                'type' => 'a',
-                'data' => ['Zapomenuté heslo?'],
-                'attributes' => ['href' => '#', 'type' => 'footnote'],
-            ]
-        ]
-    ]
 ];
 
 $template = 'blob_middle';

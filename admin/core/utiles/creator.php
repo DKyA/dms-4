@@ -3,9 +3,9 @@
 function creator($path, $placeholder_content) {
     // Podívám se, jestli existuje => vytvořím
 
-    print_r($placeholder_content);
     if (file_exists($path)) return True;
     $file = fopen($path, 'w');
+    fwrite($file, $placeholder_content);
     fclose($file);
     return False;
 

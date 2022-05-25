@@ -6,7 +6,6 @@ function apply_module($modules) {
     // $module je teda scope a musí se s ním tak pracovat
     // Takže mě bude vyloženě vždycky zajímat jenom a pouze jedna vrstva.
 
-    // print_r($module -> load_order);
 
     foreach($modules as $module) {
 
@@ -17,6 +16,8 @@ function apply_module($modules) {
                 $placeholder = doc_reader('new_component.txt');
                 return [$component_file, $placeholder];
             }
+
+            separate();
             $component_file = $path['components'] .'submodules/' . $module -> element . '.php';
             $placeholder = doc_reader('new_subcomponent.txt');
             return [$component_file, $placeholder];
@@ -34,5 +35,4 @@ function apply_module($modules) {
 
 }
 
-apply_module($layout);
 // Tohle bude v budoucnu zanestěné v daném layoutu / komponentě

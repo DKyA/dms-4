@@ -1,0 +1,1 @@
+<?php apply_module($layout);?>
