@@ -4,6 +4,7 @@ class Module {
 
     private $raw_data;
     public $load_order;
+    public $element;
     public $data;
     public $attributes;
 
@@ -14,7 +15,7 @@ class Module {
             $this -> load_order[$k] = [];
             foreach($module[$k] as $att_k => $att_v) {
                 if ($att_k == 'component') {
-                    $this -> load_order[$k][$att_k] = id_to_html($att_v);
+                    $this -> element = id_to_html($att_v);
                     continue;
                 }
                 if ($att_k == 'data') {
