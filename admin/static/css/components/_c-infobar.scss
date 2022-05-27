@@ -1,0 +1,80 @@
+.c-infobar {
+
+    height: 24px;
+
+    box-sizing: content-box;
+    padding: space(2);
+
+    background-color: white;
+
+    box-shadow: $base_shadow;
+
+    @include flex(row, space-between, center);
+
+    &__left, &__right {
+
+        @include flex(row, center, center);
+
+        & img {
+
+            width: 18px;
+            height: 18px;
+
+        }
+
+    }
+
+    &__action {
+
+        @include flex(row, center, center);
+
+        margin-left: space(2);
+
+        cursor: pointer;
+
+    }
+
+    &__center {
+
+        font-weight: 600;
+
+    }
+
+    &__right {
+
+        @include flex(row, center, center);
+
+        cursor: pointer;
+
+    }
+
+    &__username {
+
+        margin-right: space(1);
+        padding-top: 1px;
+
+        font-size: .9em;
+        line-height: .9em;
+        color: color(light-black);
+
+    }
+
+    &__profile-img {
+
+        width: 24px;
+        height: 24px;
+        border-radius: 100%;
+
+    }
+
+    &__js {
+
+        // Styluju tlačítka, detlačítkifikace
+        // Spíš jsem línej to hledat u samostatných proměnných :))
+        background-color: transparent;
+        border: none;
+        outline: none;
+
+    }
+
+}

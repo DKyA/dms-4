@@ -1,0 +1,28 @@
+<div class="c-infobar">
+    <div class="c-infobar__left">
+        <button class="c-infobar__action c-infobar__js" title="Přehled oznámení">
+            <img src="/admin/static/icons/bell.svg" alt="Ikona zvonku">
+            <?// V případě plnosti bych tam dal bell-fill?>
+        </button>
+        <button class="c-infobar__action c-infobar__js" title="Přehled zpráv">
+            <img src="/admin/static/icons/envelope.svg" alt="Ikona poštovní obálky">
+        </button>
+        <a class="c-infobar__action" title="Vyhledávání">
+            <img src="/admin/static/icons/search.svg" alt="Ikona lupy">
+        </a>
+        <a href="/admin/categories/dashboard/" class="c-infobar__action" title="Zpět na Dashboard">
+            <img src="/admin/static/icons/house.svg" alt="Ikona domečku">
+        </a>
+    </div>
+    <p class="c-infobar__center">
+        <?=$PI -> name?>
+    </p>
+    <button class="c-infobar__right c-infobar__js">
+        <div class="c-infobar__username">
+            Daniel Kyndl
+        </div>
+        <div class="c-infobar__profile-img">
+            <div class="temp-circle"></div>
+        </div>
+    </button>
+</div>
