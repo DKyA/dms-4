@@ -7,33 +7,61 @@
 
     position: fixed;
     top: 0;
-    left: calc(-90% + 32px);
+    right: calc(100% - 32px);
 
     @include flex(row, flex-start, center);
 
     pointer-events: none;
     z-index: z(fg-4);
 
-    transition: left .3s ease-in-out;
+    transition: right .3s ease-in-out;
 
     &--visible {
 
-        left: 0;
+        right: 10%;
+
+    }
+
+    @media(min-width: breakpoint(xs)) {
+
+        width: 72%;
+
+        &--visible {
+            right: 28%;
+        }
+
+    }
+
+    @media(min-width: breakpoint(sm)) {
+
+        width: 350px;
+
+        &--visible {
+            right: calc(100% - 350px);
+        }
+
+    }
+
+    @media(min-width: breakpoint(lg)) {
+
+        position: sticky;
+        width: 100%;
 
     }
 
     &__self {
 
         width: 100%;
+        height: 100%;
 
         @include flex(column, space-between, flex-start);
         padding: space(4);
-        height: 100%;
 
         background: linear-gradient(215deg, color('light-black'), color('black'));
         color: color('white');
 
         pointer-events: all;
+        overflow: hidden;
 
     }
 
@@ -163,13 +191,15 @@
         background: linear-gradient(215deg, color('light-black'), color('black'));
         background-attachment: local;
 
-        padding: space(1.5) space(1);
+        padding: space(1.5) space(1) space(1.5) space(1) + 1px;
         border: none;
         outline: none;
         border-radius: 0 space(1) space(1) 0;
 
         @include flex(row, center, center);
 
+        position: relative;
+        left: -1px;
 
         & > img {
 
@@ -185,6 +215,13 @@
                 transform: rotateY(180deg);
 
             }
+
+        }
+
+        @media (min-width: breakpoint(lg)) {
+
+            display: none;
+            visibility: hidden;
 
         }
 

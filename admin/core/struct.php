@@ -11,6 +11,7 @@ $base_class = ($PI -> in_nav) ? 'l-page--with_nav' : 'l-page--default';
     insert_nav();
 ?>
 <div class="l-content">
+
 <?php
     insert_infobar();
     // Tohle bude složitější, asi nejlepší se inspirovat systémem 2.0

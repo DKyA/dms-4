@@ -5,7 +5,20 @@
 
     &--with_nav {
 
-        
+        display: grid;
+        grid-template-columns: 100%;
+
+        @media (min-width: breakpoint(lg)) {
+
+            grid-template-columns: 30% 70%;
+
+        }
+
+        @media (min-width: breakpoint(xl)) {
+
+            grid-template-columns: 20% 80%;
+
+        }
 
     }
 
