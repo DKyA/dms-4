@@ -3,7 +3,7 @@
 // To se pak vloží do obou initů.
 
 function insert_nav() {
-    global $PI, $path;
+    global $PI, $path, $text;
 
     if (!$PI -> in_nav) return;
 
@@ -13,7 +13,7 @@ function insert_nav() {
 
 
 function insert_infobar() {
-    global $PI, $path;
+    global $PI, $path, $text;
     if (!$PI -> infobar) return;
 
     require $path['components'] . 'basic/infobar.php';

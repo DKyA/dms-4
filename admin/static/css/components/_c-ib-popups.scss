@@ -1,0 +1,295 @@
+.c-infobar_pu {
+
+    background-color: color('white');
+
+    padding: space(2);
+    box-shadow: $base_shadow;
+
+    @include flex(column, center, center);
+
+    position: absolute;
+
+    color: color(light-black);
+
+    min-width: 300px;
+
+    display: none;
+    opacity: 0;
+    z-index: z(fg-1);
+
+    &::after {
+
+        content: '';
+        width: 10px;
+        height: 10px;
+
+        background-color: color('white');
+
+        position: absolute;
+        top: -5px;
+        right: 30px;
+
+        transform: rotate(45deg);
+
+    }
+
+    &--user {
+
+        top: 65px;
+        right: 5px;
+
+    }
+
+    &--bell {
+
+        top: 65px;
+        margin-left: 10px;
+
+        &::after {
+            right: initial;
+            left: 27px;
+        }
+
+    }
+
+    &--mail {
+
+        top: 65px;
+        margin-left: 10px;
+
+        &::after {
+            right: initial;
+            left: 60px;
+        }
+
+    }
+
+    &--default {
+
+        display: flex;
+        opacity: 1;
+        animation: hide .5s ease-in-out forwards;
+
+        & * {
+            z-index: z(bg-4);
+        }
+
+    }
+
+    &--shown {
+
+        animation: appear .5s ease-in-out forwards;
+        display: flex;
+        opacity: 1;
+
+    }
+
+    &__ui {
+
+        width: 100%;
+
+        @include flex(row, flex-start, center);
+        padding: space(2);
+        margin-bottom: space(2);
+
+        border-bottom: 2px solid color(light-black);
+
+    }
+
+    &__img {
+
+        height: 30px;
+        width: 30px;
+
+        border: none;
+        outline: none;
+        border-radius: 100%;
+
+        background-color: black;
+
+        cursor: pointer;
+
+    }
+
+    &__name {
+
+        font-size: 1.1em;
+        margin-left: space(2);
+
+    }
+
+    &__controls {
+
+        width: 100%;
+
+        font-size: 1em;
+
+        border: none;
+        border-bottom: 2px solid transparent;
+        outline: none;
+        background-color: color('white');
+
+        padding: space(.5) space(2);
+        margin-bottom: space(.5);
+
+        text-align:left;
+
+        color: color(light-black);
+        text-decoration: none;
+
+        cursor: pointer;
+        transition: border-bottom-color .3s ease-in-out;
+
+        &:hover, &:focus {
+
+            border-bottom-color: color(light-black);
+
+        }
+
+    }
+
+    &__close {
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 16px;
+        height: 16px;
+
+        background-color: color(close);
+
+        border: none;
+        border-radius: 100%;
+        margin: space(2);
+        outline: none;
+
+        cursor: pointer;
+
+        transition: background-color .15s ease-in-out;
+
+        &:focus, &:hover {
+
+            background-color: darken(color(close), 20%);
+
+        }
+
+    }
+
+    &__headline {
+
+        width: 100%;
+
+        color: color(light-black);
+        font-weight: 500;
+
+        padding-bottom: 2px;
+        border-bottom: 1px solid black;
+        margin-bottom: space(2);
+
+    }
+
+    &__h1 {
+
+        font-size: 1.1em;
+
+    }
+
+    &__notification {
+
+        font-weight: 200;
+        text-decoration: none;
+
+        width: 100%;
+
+        @include flex(row, flex-start, center);
+
+        padding: space(1.5);
+
+        transition: background-color .3s ease-in-out;
+
+        &:hover, &:focus {
+
+            background-color: color(llgrey);
+
+        }
+
+        & + & {
+
+            border-top: 1px solid color(dimmed);
+
+        }
+
+    }
+
+    &__alert {
+
+        font-weight: 200;
+        font-size: .8em;
+
+        color: color(light-black);
+        text-decoration: none;
+
+    }
+
+    &__icon {
+
+        background-color: color(dimmed); // PLACEHOLDING!!!
+
+        width: space(3.5);
+        height: space(3.5);
+
+        border-radius: space(1);
+        margin-right: space(2);
+
+    }
+
+    &__clean {
+
+        color: color(dimmed);
+
+        margin: space(2) 0;
+
+        & > p {
+            font-size: .9em;
+        }
+
+    }
+
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        display: none;
+        visibility: hidden;
+    }
+    10% {
+        opacity: 0;
+        display: flex;
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        display: flex;
+        visibility: visible;
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+        display: flex;
+        visibility: visible;
+    }
+    90% {
+        opacity: 0;
+        display: flex;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+        visibility: hidden;
+    }
+}

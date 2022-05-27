@@ -34,6 +34,7 @@ class Nav {
     }
 
     private function print_links() {
+        // Použita v komponentě.
 
         foreach ($this -> links as $link) {
 
