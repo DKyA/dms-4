@@ -1,0 +1,25 @@
+<aside class="c-nav">
+    <nav class="c-nav__self">
+        <div class="c-nav__head">
+            <h2><?=$text[0]?> │ <?=$PI->name?></h2>
+        </div>
+        <div class="c-nav__body">
+            <ul>
+                <?php $this -> print_links(); ?>
+            </ul>
+        </div>
+        <div class="c-nav__foot">
+            <a href="/admin/categories/settings/">
+                <img class="c-nav__foot-img c-nav__foot-img--settings" src="/admin/static/icons/gear.svg" alt="Settings icon" height="24" width="24">
+            </a>
+            <a href="#">
+                <img class="c-nav__foot-img c-nav__foot-img--logout" src="/admin/static/icons/person-dash.svg" alt="Log out" height="24" width="24">
+            </a>
+        </div>
+    </nav>
+
+    <button class="c-nav__arrow" id="nav_control">
+        <img src="/admin/static/icons/chevron-double-right.svg" alt="Open / close navigation" width="16" height="16">
+    </button>
+
+</aside>
