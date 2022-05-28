@@ -9,4 +9,21 @@ $nested => další komponenty
 */
 ?>
 
-<?=$data[0]?>
+<div class="c-carousel_card c-carousel_card<?=$attributes['class']?> c-carousel_card--hidden">
+    <div class="c-carousel_card__cl">
+        <p class="c-carousel_card__text"><?=$data[0]?></p>
+        
+        <a href="<?=$attributes['link']?>" target="_blank" rel="noopener noreferrer">
+            <div class="c-carousel_card__link-holder"></div>
+        </a>
+    </div>
+    <?php 
+    if ($attributes['api']) {
+        ?>
+        <div class="c-carousel_card__api">
+            189 followers
+        </div>
+    <?php
+    }
+    ?>
+</div>

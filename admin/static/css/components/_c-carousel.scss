@@ -1,0 +1,220 @@
+.c-card_carousel {
+
+	padding-top: space(7);
+
+	width: 100%;
+	height: auto;
+
+	position: relative;
+
+	background-color: color('white');
+	box-shadow: $base_shadow;
+
+	@include flex(row, center, center);
+
+	min-height: 40px; // TEMP
+
+	&__caption {
+
+		position: absolute;
+		top: space(2.5);
+		left: space(3);
+
+		color: color('black');
+		font-size: .9em;
+
+	}
+
+	&__inner {
+
+		@include flex(row, space-between, center);
+		width: 100%;
+
+		padding-bottom: space(3);
+
+	}
+
+	&__arrow {
+
+		border: none;
+		outline: none;
+		background-color: transparent;
+
+		cursor: pointer;
+
+		height: 100%;
+		padding: space(4) space(1);
+		border-radius: space(1);
+
+		@include flex(row, center, center);
+		transition: background-color .2s ease-in-out,
+					filter .2s ease-in-out;
+
+		&--disabled {
+			cursor: default;
+			background-color: rgba(0, 0, 0, .1);
+			box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+			&>img {
+				filter: invert(50%);
+			}
+		}
+
+		@media (min-width: breakpoint(xs)) {
+			padding: space(4) space(2);
+		}
+
+	}
+
+	&__casing {
+
+		display: grid;
+		justify-content: center;
+		align-items: center;
+		gap: space(2);
+
+		width: 100%;
+		// To je tady kvůli observeru
+		height: 200px;
+
+		@media (min-width: breakpoint(xs)) {
+			height: 225px;
+		}
+
+	}
+
+}
+
+.c-carousel_card {
+
+	width: 200px;
+	height: 200px;
+
+	@media (min-width: breakpoint(xs)) {
+
+		width: 300px;
+		height: 225px;
+
+	}
+
+	background-color: color('blue');
+
+	position: relative;
+
+	display: none;
+	visibility: hidden;
+
+	&__cl {
+
+		padding: space(4);
+
+		width: 100%;
+		height: auto;
+
+		@include flex(row, space-between, center);
+
+	}
+
+	&__text {
+
+		color: color('white');
+		text-decoration: none;
+
+	}
+
+	&__link-holder {
+
+		height: 18px;
+		width: 18px;
+
+		border: 1px solid color('white');
+		border-radius: 100%;
+		margin-left: space(2);
+
+		position:relative;
+		background-color: color('white');
+
+	}
+
+	&--facebook {
+		background-color: color(facebook);
+	}
+	&--twitter {
+		background-color: color(twitter);
+	}
+	&--instagram {
+		background-color: color(instagram);
+	}
+	&--linkedin {
+		background-color: color(linkedin);
+	}
+	&--google {
+		background-color: color(google);
+	}
+	&--booking {
+		background-color: color(booking);
+	}
+	&--telegram {
+		background-color: color(telegram);
+	}
+	&--messenger {
+		background-color: color(messenger);
+	}
+	&--tripadvisor {
+		background-color: color(tripadvisor);
+	}
+
+	&--appear {
+		animation: appear .3s linear forwards;
+		display: block;
+		visibility: visible;
+	}
+	&--move-left {
+		animation: move_left .3s ease-in-out forwards;
+		display: block;
+		visibility: visible;
+	}
+	&--move-right {
+		animation: move_right .3s ease-in-out;
+		display: block;
+		visibility: visible;
+	}
+	&--stack-hide {
+		animation: card_hide .3s ease-in-out forwards;
+		display: block;
+		visibility: visible;
+	}
+
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes move_left {
+	0% {
+		transform: translateX(316px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+@keyframes move_right {
+	0% {
+		transform: translateX(0);
+	}
+	95% {
+		transform: translateX(316px);
+	}
+}
+@keyframes card_hide {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

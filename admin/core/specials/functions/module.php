@@ -37,7 +37,7 @@ class Module {
         }
     }
 
-    private function inner_attributes($attributes) {
+    protected function inner_attributes($attributes) {
         $res = [
             'class' => '',
             'type' => '',
@@ -48,8 +48,12 @@ class Module {
             'height' => '',
             'id' => '', // Technicky vzato nepoužíváno. Ale může se stát, že budu potřebovat hodně custom id.
             'method' => '',
-            'level' => ''
+            'level' => '',
+            'api' => '',
+            'link' => '',
         ];
+
+        if (!$attributes) return;
 
         foreach ($attributes as $k => $v) {
 
@@ -57,19 +61,27 @@ class Module {
                 case 'required':
                     if ($v) {
                         $res[$k] = $k;
+                        break;
                     }
                 case 'type':
                     $res['class'] = "--{$v}";
                     $res[$k] = "{$k}='{$v}'";
+                    break;
                 case 'level':
                     if ($v) {
                         $res[$k] = $v;
+                        break;
                     }
                     else {
                         $res[$k] = 1;
+                        break;
                     }
                 case 'style' | 'class' | 'rel':
                     $res[$k] = $v;
+                    break;
+                case 'link' | 'href':
+                    $res[$k] = "href = '{$v}'";
+                    break;
                 default:
                     $res[$k] = "{$k}='{$v}'";
             }

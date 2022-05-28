@@ -40,7 +40,7 @@ function is_nestable($module) {
 
     global $db;
 
-    $statement = $db -> prepare("SELECT nestable FROM component_list WHERE desc_db = :ide");
+    $statement = $db -> prepare("SELECT nestable FROM component_list WHERE config = :ide");
     $statement -> bindValue(":ide", "c_{$module -> element}", PDO::PARAM_STR);
     $statement -> execute();
 

@@ -2,11 +2,15 @@
 
 // Ty budeš teoreticky jenom a pouze číst DB a házet komponenty...
 
-class Component {
+require $path['core'] . 'specials/functions/module.php';
+
+class Component extends Module {
 
     public $original;
     public $data;
     public $nested;
+
+    public $attributes;
 
     function __construct($component) {
 
@@ -15,6 +19,8 @@ class Component {
         $this -> get_data();
         $this -> create();
         $this -> get_subcomponents();
+
+        $this -> attributes = $this -> inner_attributes(json_decode($this -> original['attributes'], True));
 
     }
 
@@ -95,8 +101,8 @@ function apply_module($components) {
 
         global $path, $text;
 
-        $data = json_decode($component -> original['data']);
-        $attributes = json_decode($component -> original['attributes']);
+        $data = json_decode($component -> original['data'], True);
+        $attributes = $component -> attributes;
         $id = $component -> original['ref']; // Rozšiřitelné skrz Ids::unique_id($base)
         $dest = $component -> data['config'];
         $nested = $component -> nested;
