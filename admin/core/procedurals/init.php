@@ -4,8 +4,9 @@
 
 class Component {
 
-    private $original;
-    private $data;
+    public $original;
+    public $data;
+    public $nested;
 
     function __construct($component) {
 
@@ -13,6 +14,7 @@ class Component {
 
         $this -> get_data();
         $this -> create();
+        $this -> get_subcomponents();
 
     }
 
@@ -23,6 +25,9 @@ class Component {
         $statement -> execute([$this -> original['type']]);
 
         $this -> data = $statement -> fetch(PDO::FETCH_ASSOC);
+
+        // Error hláška, pokud by se stalo, že bych se pokoušel zanestit něco, co zanestitelné není.
+        if ($this -> data['nestable'] and $this -> original['affiliation']) die("Critical error, {$this -> data['config']} is not nestable, child given!");
 
     }
 
@@ -42,16 +47,29 @@ class Component {
 
         })();
 
-        creator($path['components'] . 'modules/_' . $this -> data['config'] . '.php', $placeholder);
+        if ($this -> data['nestable']) {
+            creator($path['components'] . 'modules/_' . $this -> data['config'] . '.php', $placeholder);
+            return;
+        }
+
+        creator($path['html'] . 'submodules/_' . $this -> data['config'] . '.html', $placeholder);
 
     }
 
-    function get_subcomponents() {
-        // Projde nestable a nested, které jsou na to navázané
-        // V DB struktuře bude potřeba zkopírovat genezi Specials
-    }
+    public function get_subcomponents() {
+        global $db;
 
-    // function get_attributes() {} ???
+        $this -> nested = [];
+        $statement = $db -> prepare("SELECT * FROM components WHERE affiliation = ?");
+        $statement -> execute([$this -> original['id']]);
+
+        foreach ($statement as $row) {
+
+            array_push($this -> nested, new Component($row));
+
+        }
+
+    }
 
 }
 
@@ -63,12 +81,33 @@ $components = [];
 
 foreach($statement as $component_props) {
 
+    if ($component_props['affiliation']) continue;
     array_push($components, new Component($component_props));
 
-    // $component_data = 
+}
+
+function apply_module($components) {
+
+    if (!isset($components)) return;
+    // Konec...
+
+    foreach ($components as $component) {
+
+        global $path, $text;
+
+        $data = json_decode($component -> original['data']);
+        $attributes = json_decode($component -> original['attributes']);
+        $id = $component -> original['ref']; // Rozšiřitelné skrz Ids::unique_id($base)
+        $dest = $component -> data['config'];
+        $nested = $component -> nested;
+
+        if ($component -> data['nestable'] === 1) {
+            require $path['components'] . "modules/_{$dest}.php";
+            continue;
+        }
+        require $path['html'] . "submodules/_{$dest}.html";
+    }
 
 }
 
-function apply_module() {
-    
-}
+apply_module($components);
