@@ -6,11 +6,11 @@ function apply_modules($modules) {
     // $module je teda scope a musí se s ním tak pracovat
     // Takže mě bude vyloženě vždycky zajímat jenom a pouze jedna vrstva.
 
-
     foreach($modules as $id => $module) {
 
         $file_info = (function($module) {
             global $path;
+
             if (is_nestable($module)) {
                 $component_file = $path['modules'] . '_' . $module -> element . '.php';
                 $placeholder = doc_reader('new_component.txt');
@@ -41,10 +41,11 @@ function is_nestable($module) {
     global $db;
 
     $statement = $db -> prepare("SELECT nestable FROM component_list WHERE config = :ide");
-    $statement -> bindValue(":ide", "c_{$module -> element}", PDO::PARAM_STR);
+    $statement -> bindValue(":ide", "{$module -> element}", PDO::PARAM_STR);
     $statement -> execute();
 
     $nestable = $statement -> fetch(PDO::FETCH_COLUMN);
+
     return $nestable;
 
 }
