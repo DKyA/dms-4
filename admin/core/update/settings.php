@@ -48,7 +48,13 @@ class Updates {
     private function update_page_accordions($page) {
         global $db;
 
-        $prefill = [7, "{$page['ref']}-setup", json_encode(["Stránka {$page['name']}"]), json_encode(['type' => 'settings']), $page['id']];
+        $prefill = [
+            7,
+            "{$page['ref']}-setup", 
+            json_encode(["Stránka {$page['name']}"]), 
+            json_encode(['type' => 'settings']), 
+            $page['id']
+        ];
 
         $statement = $db -> prepare("INSERT INTO component_settings (type, ref, data, attributes, corr_page) VALUES(?, ?, ?, ?, ?)");
         $statement -> execute($prefill);
