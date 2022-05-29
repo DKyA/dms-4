@@ -88,7 +88,7 @@ class Info {
 }
 class Stack {
     constructor(elements) {
-        if (elements == undefined) {
+        if (elements == false) {
             this.stack = [];
             return;
         }
@@ -216,16 +216,17 @@ function display_adequate_no_of_cards(info, cards, stack_left, stack_right) {
     arrows(cards, info);
 }
 function init_move(cards, info, stack_left, stack_right) {
-    for (let i in info.controls) {
+    for (let a in info.controls) {
+        let i = parseInt(a);
         info.controls[i].addEventListener("click", () => {
             info.toggle(i);
-            let k = (i) ? 0 : 1;
+            let k = (i > 0) ? 0 : 1;
             for (var j = (cards.length - 1) * k; j >= 0 && j < cards.length; j = j + 1 - 2 * k) {
                 if (cards[j].is_hidden)
                     continue;
                 break;
             }
-            if (i && stack_left.stackLength) {
+            if (i == 1 && stack_left.stackLength) {
                 stack_right.push_end(cards[j]);
                 setTimeout(() => {
                     for (let card of cards) {
@@ -239,7 +240,7 @@ function init_move(cards, info, stack_left, stack_right) {
                     info.toggle(i);
                 }, 600);
             }
-            if (!i && stack_right.stackLength) {
+            if (i == 0 && stack_right.stackLength) {
                 stack_left.push_end(cards[j]);
                 setTimeout(() => {
                     for (let card of cards) {

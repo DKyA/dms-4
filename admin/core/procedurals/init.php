@@ -108,7 +108,13 @@ function apply_module($components) {
         $nested = $component -> nested;
 
         if ($component -> data['nestable'] === 1) {
+            ?>
+                <div class="l-component">
+            <?php
             require $path['components'] . "modules/_{$dest}.php";
+            ?>
+                </div>
+            <?php
             continue;
         }
         require $path['html'] . "submodules/_{$dest}.html";

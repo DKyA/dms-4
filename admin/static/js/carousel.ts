@@ -1,8 +1,8 @@
 class Card {
     card: any;
-    width: number;
+    width: any;
     active: boolean;
-	constructor(card: { clientWidth: any; }) {
+	constructor(card) {
 		this.card = card;
 		this.width = card.clientWidth;
 		this.active = false;
@@ -22,7 +22,7 @@ class Card {
 		return this.card;
 	}
 
-	set move(x: any) {
+	set move(x) {
 		this.purify();
 		this.card.classList.add(x);
 	}
@@ -43,8 +43,7 @@ class Info{
     control_left: any;
     control_right: any;
     arrows: any;
-
-	constructor(wrapper: Element, cards: any, controls: any[]) {
+	constructor(wrapper, cards, controls) {
 		this.wrapper = wrapper;
 		this.cards = cards;
 		this.card_width = parseInt((getComputedStyle(document.querySelector(".c-carousel_card")).width).replace("px", ""));
@@ -75,17 +74,17 @@ class Info{
 			1: this.control_right,
 		};
 	}
-	block_arrow(x: string | number) {
+	block_arrow(x) {
 		if (this.arrows[x].classList.contains("c-card_carousel__arrow--disabled")) return;
 		this.arrows[x].classList.add("c-card_carousel__arrow--disabled");
 		this.arrows[x].disabled = true;
 	}
-	unblock_arrow(x: string | number) {
+	unblock_arrow(x) {
 		if (!this.arrows[x].classList.contains("c-card_carousel__arrow--disabled")) return;
 		this.arrows[x].classList.remove("c-card_carousel__arrow--disabled");
 		this.arrows[x].disabled = false;
 	}
-	toggle(x: string | number) {
+	toggle(x) {
 		this.controls[x].classList.toggle("c-card_carousel__arrow--disabled");
 		let set_value = (this.controls[x].disabled === true) ? false : true;
 		this.controls[x].disabled = set_value;
@@ -112,7 +111,7 @@ class Stack {
     stack: any[];
 
 	constructor(elements) {
-		if (elements == undefined) {
+		if (elements == false) {
 			this.stack = [];
 			return;
 		}
@@ -135,7 +134,7 @@ class Stack {
 }
 
 class Stack_left extends Stack {
-	constructor(elements: any) {
+	constructor(elements) {
 		super(elements);
 	}
 	push_end(card) {
@@ -212,6 +211,7 @@ function card_carousel() {
 		const stack_right = new Stack_right(Object.assign([], cards)); // Initially...
 		// Tady vyrábím kopii, aby neměla vazbu i na originální pole
 
+        
 		init_move(cards, info, stack_left, stack_right);
 
 		const resize_event = new ResizeObserver(() => {
@@ -263,11 +263,12 @@ function display_adequate_no_of_cards(info, cards, stack_left, stack_right) {
 
 function init_move(cards, info, stack_left, stack_right) {
 	// let cards = cards_src;
-	for (let i in info.controls) {
+	for (let a in info.controls) {
+        let i = parseInt(a);
 		info.controls[i].addEventListener("click", () => {
 			info.toggle(i);
 
-			let k = (i) ? 0 : 1;
+			let k = (i > 0) ? 0 : 1;
 			for (var j = (cards.length-1) * k; j >= 0 && j < cards.length; j = j + 1 - 2*k) {
 				// Oboustranný loop (podle vstupu jde od začátku / od konce)
 				if (cards[j].is_hidden) continue;
@@ -276,7 +277,7 @@ function init_move(cards, info, stack_left, stack_right) {
 			}
 			// Samotné zobrazovací funkce. I tohle by se dalo udělat do jednoho blobu
 			// Ale tohle je čitelnější.
-			if (i && stack_left.stackLength) {
+			if (i == 1 && stack_left.stackLength) {
 				stack_right.push_end(cards[j]);
 				setTimeout(() => {
 					for (let card of cards) {
@@ -289,7 +290,7 @@ function init_move(cards, info, stack_left, stack_right) {
 					info.toggle(i);
 				}, 600);
 			}
-			if (!i && stack_right.stackLength) {
+			if (i == 0 && stack_right.stackLength) {
 				stack_left.push_end(cards[j]);
 				setTimeout(() => {
 					for (let card of cards) {
@@ -352,6 +353,5 @@ function init_info(i, cards) {
 function state(x) {
 	return "c-carousel_card" + states[x];
 }
-
 
 card_carousel();
