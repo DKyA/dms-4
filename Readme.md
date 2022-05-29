@@ -11,3 +11,7 @@
     - Security flaw: Je nesmysl pouštět všechny form inputy z jednoho místa a mít tak univerzální přístup
     - Ano, je možné udělat dva uzavřené okruhy. Ale vždycky je potřeba si nějak uchovat a nezávisle ověřit ze které stránky to jede
     - A jestli na to má uživatel pravomoc.
+
+## Considerations - Specials design:
+    - Asi by bylo dobrý nějakým způsobem vkládat komponenty l-component i od specials / navbar-free věcí.
+    - Asi by bylo dobrý pro to udělat nějakou logiku
