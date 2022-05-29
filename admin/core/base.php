@@ -4,8 +4,9 @@ require $path['core'] . 'db/attacher.php';
 require $path['core'] . 'libs/texts.php';
 
 require $path['core'] . 'utiles/include_all.php';
-run('core', 'update');
 run('core', 'utiles');
+run('core', 'update');
+
 
 require $path['core'] . 'page_info.php';
 
