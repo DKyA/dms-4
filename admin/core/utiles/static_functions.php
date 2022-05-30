@@ -4,6 +4,8 @@ class StaticFunctions {
 
     public static function binary_search($data, $value) {
 
+        if (count($data) == 0) return False;
+
         $pivot = floor(count($data) / 2);
 
         if ($data[$pivot] == $value) return True;
