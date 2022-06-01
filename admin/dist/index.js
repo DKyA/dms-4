@@ -1,3 +1,27 @@
+function qs(selector, parent = document) {
+    return parent.querySelector(selector);
+}
+function qsa(selector, parent = document) {
+    return [...parent.querySelectorAll(selector)];
+}
+function sleep(duration) {
+    return new Promise(resolve => {
+        setTimeout(resolve, duration);
+    });
+}
+function randint(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+function first(arr, n = 1) {
+    if (n === 1)
+        return arr[0];
+    return arr.filter((_, index) => index < n);
+}
+function last(arr, n = 1) {
+    if (n === 1)
+        return arr[arr.length - 1];
+    return arr.filter((_, index) => arr.length - index <= n);
+}
 class Card {
     constructor(card) {
         this.card = card;
