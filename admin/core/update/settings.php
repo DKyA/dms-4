@@ -69,6 +69,8 @@ class Updates {
 
         }
 
+        $this -> check_and_set_individuals();
+
         // Asi bych nejdřív komponenty vytvořil => pouze tam, kde to nefunguje
         // Byla by tam i procházecí funkce, která by se určitě volala jenom na stisknutí tlačítka => moc dlouhý... 
         // Delete je ošetený kaskádou. Snad.
@@ -142,11 +144,46 @@ class Updates {
 
     }
 
-    private function insert_individual_setters() {
-        echo "Haii";
+    private function check_and_set_individuals() {
+        global $db;
+
+        $statement = $db -> prepare("SELECT attributes FROM component_settings WHERE type = 7 AND corr_element > 0");
+        $statement -> execute();
+
+        foreach ($this -> components as $component) {
+            print_r($component);
+            separate();
+        }
+
+        while($values = json_decode($statement -> fetch(PDO::FETCH_COLUMN), true)) {
+
+            $values = $values['values'];
+
+            if(!$this -> check_individual($values)) {
+
+                $this -> set_individual($values);
+
+            }
+
+        }
+
+    }
+
+
+    private function check_individual($c) {
+        // Kontrola aktuálnosti. True = OK.
+        print_r($c);
+
+        return true;
+
+    }
+
+    private function set_individual($c) {
+        print_r($c);
 
 
     }
+
 
     private function inserter($prefill) {
         global $db;
@@ -182,3 +219,4 @@ new Updates();
         //     } 
 
         // })($component);
+
