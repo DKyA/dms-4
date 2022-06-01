@@ -71,6 +71,9 @@ class Updates {
 
         // Asi bych nejdřív komponenty vytvořil => pouze tam, kde to nefunguje
         // Byla by tam i procházecí funkce, která by se určitě volala jenom na stisknutí tlačítka => moc dlouhý... 
+        // Delete je ošetený kaskádou. Snad.
+
+
 
         // -- Okej, asi stačí.
 
