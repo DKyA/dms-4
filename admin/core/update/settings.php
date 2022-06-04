@@ -44,7 +44,7 @@ class Updates {
             array_push($this -> pages, $value);
             // Inserting attribute
 
-            // Binary search 
+            // Binary search
             if(StaticFunctions::binary_search($this -> settings_corr_page, $value['id'])) continue;
             $this -> update_page_accordions($value);
 
@@ -71,14 +71,6 @@ class Updates {
 
         $this -> check_and_set_individuals();
 
-        // Asi bych nejdřív komponenty vytvořil => pouze tam, kde to nefunguje
-        // Byla by tam i procházecí funkce, která by se určitě volala jenom na stisknutí tlačítka => moc dlouhý... 
-        // Delete je ošetený kaskádou. Snad.
-
-
-
-        // -- Okej, asi stačí.
-
     }
 
 
@@ -86,10 +78,10 @@ class Updates {
 
         $prefill = [
             7,
-            "{$page['ref']}-setup", 
+            StaticFunctions::Dynamic() -> d_ids("{$page['ref']}-setup", "component_settings"),
             NULL,
-            json_encode(["Stránka {$page['name']}"]), 
-            json_encode(['type' => 'settings']), 
+            json_encode(["Stránka {$page['name']}"]),
+            json_encode(['type' => 'settings']),
             $page['id'],
             NULL
         ];
@@ -121,7 +113,7 @@ class Updates {
 
         $name = (function($component) {
             global $db;
-            
+
             $statement = $db -> prepare("SELECT name FROM component_list WHERE id = ?");
             $statement -> execute([$component['type']]);
 
@@ -132,7 +124,7 @@ class Updates {
 
         $prefill = [
             7,
-            "{$component['ref']}-setup",
+            StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-setup", "component_settings"),
             $affiliation,
             json_encode(["Komponenta {$name}"]),
             json_encode(['type' => 'sub_settings', 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))]),
@@ -147,48 +139,168 @@ class Updates {
     private function check_and_set_individuals() {
         global $db;
 
-        $statement = $db -> prepare("SELECT attributes FROM component_settings WHERE type = 7 AND corr_element > 0");
-        $statement -> execute();
-
+        // SECTION WITH REAL SETTINGS:
         foreach ($this -> components as $component) {
-            print_r($component);
-            separate();
+
+            $c_data = json_decode($component['data'], true);
+            $c_attr = json_decode($component['attributes'], true);
+            $real = ($c_data == null) ? 0 : count($c_data);
+            $real += ($c_attr == null) ? 0 : count($c_attr);
+
+            // Tyhle čísla porovnat s hodnotami v tabulce.
+            // A: Nenajdu match: vytvořím novou
+            $statement = $db -> prepare("SELECT id FROM component_settings WHERE corr_element = ? AND type = 7");
+            $statement -> execute([$component['id']]);
+
+            $a_id = $statement -> fetch(PDO::FETCH_COLUMN); // accordion id
+
+            // Getting no of children:
+            // $statement = $db -> prepare("SELECT COUNT(*) FROM component_settings WHERE affiliation = ?");
+            $statement = $db -> prepare("SELECT COUNT(*) FROM component_settings WHERE component_settings.affiliation = ? AND component_settings.type = EXISTS (SELECT * FROM component_list WHERE component_list.config = 'input')");
+            $statement -> execute([$a_id]);
+
+            $length = $statement -> fetch(PDO::FETCH_COLUMN);
+
+            // Compare fetch and real
+            // Default: OK
+
+            // A: Detekce nulové délky
+            if ($length === 0) {
+                $this -> create_new_confs($component, $c_data, $c_attr, $a_id);
+                continue;
+            }
+
+            // B: Špatně čísla: Regenerace
+            if ($length != $real && $length != 0) {
+                $this -> update_confs($component, $c_data, $c_attr, $a_id);
+            }
+
+            // C: Všechno OK: Zkontroluji typy.
+            $this -> update_types();
+
         }
 
-        while($values = json_decode($statement -> fetch(PDO::FETCH_COLUMN), true)) {
+    }
 
-            $values = $values['values'];
+    private function update_types() {
+        // De facto jen spustím determine types a porovnám s db.
+    }
 
-            if(!$this -> check_individual($values)) {
 
-                $this -> set_individual($values);
+    private function update_confs($component, $c_data, $c_attr, $a_id) {
+        global $db;
+        // Russian method. Regenerating.
 
+        $statement = $db -> prepare("DELETE FROM component_settings WHERE affiliation = ?");
+        $statement -> execute([$a_id]);
+
+        $this -> create_new_confs($component, $c_data, $c_attr, $a_id);
+
+    }
+
+
+    private function create_new_confs($component, $c_data, $c_attr, $a_id) {
+        global $db;
+        // Determine types:
+        $types = $this -> determine_types($c_data, $c_attr);
+
+
+        // Data::
+        if ($types['d']) {
+            $this -> insert_new_element($a_id, 'headline', $component, ['Textace'], ['level' => 2, 'type' => 'setting-2'], 'separator');
+
+            for ($i = 0; $i < count($types['d']); $i++) {
+                $this -> insert_new_element($a_id, 'input', $component, [], ['type' => $types['d'][$i], 'value' => array_values($c_data)[$i], 'correspondence' => array_keys($c_data)[$i], 'follows' => $component['ref']], 'conf');
+            }
+        }
+
+        // Separating headline
+        if ($types['a']) {
+            $this -> insert_new_element($a_id, 'headline', $component, ['Funkční atributy'], ['level' => 2, 'type' => 'setting-2'], 'separator');
+
+            for ($i = 0; $i < count($types['a']); $i++) {
+                $this -> insert_new_element($a_id, 'input', $component, [], ['type' => $types['a'][$i], 'value' => array_values($c_attr)[$i], 'correspondence' => array_keys($c_attr)[$i], 'follows' => $component['ref']], 'conf');
+            }
+        }
+    }
+
+
+    private function insert_new_element($a_id, $h_id, $component, $data, $attributes, $type) {
+        global $db;
+
+        // Input id:
+        $statement = $db -> prepare("SELECT id FROM component_list WHERE config = ?");
+        $statement -> execute([$h_id]);
+        $component_id = $statement -> fetch(PDO::FETCH_COLUMN);
+
+        // Headline id:
+
+        $dataset = [
+            $a_id,
+            $component_id,
+            StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-$type", 'component_settings'),
+            json_encode($data),
+            json_encode($attributes),
+            $component['id']
+        ];
+
+        $statement = $db -> prepare("INSERT INTO component_settings (affiliation, type, ref, data, attributes, corr_element) VALUES (?, ?, ?, ?, ?, ?)");
+        $statement -> execute($dataset);
+    }
+
+
+    private function determine_types($data, $attr) {
+
+        $res = [
+            'd' => [],
+            'a' => []
+        ];
+
+        if ($data) {
+
+            foreach($data as $d) {
+                if (strlen($d) > 64) {
+                    array_push($res['d'], 'textarea');
+                    continue;
+                }
+                array_push($res['d'], 'text');
             }
 
         }
 
+        if ($attr) {
+            foreach($attr as $a) {
+                if (filter_var($a, FILTER_VALIDATE_INT)) {
+                    array_push($res['a'], 'number');
+                    continue;
+                }
+                if (is_string($a) && strlen($a) > 64) {
+                    array_push($res['a'], 'textarea');
+                    continue;
+                }
+                if (is_string($a) && strlen($a) < 64) {
+                    array_push($res['a'], 'text');
+                    continue;
+                }
+                // V Bucoudnu možná obrázky.
+                die("Pro daný datový typ $a není vytvořený konfigurátor...");
+            }
+
+        }
+
+        return $res;
+
     }
-
-
-    private function check_individual($c) {
-        // Kontrola aktuálnosti. True = OK.
-        print_r($c);
-
-        return true;
-
-    }
-
-    private function set_individual($c) {
-        print_r($c);
-
-
-    }
-
 
     private function inserter($prefill) {
         global $db;
 
-        $statement = $db -> prepare("INSERT INTO component_settings (type, ref, affiliation, data, attributes, corr_page, corr_element) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $statement = $db -> prepare(
+            "INSERT INTO
+            component_settings
+            (type, ref, affiliation, data, attributes, corr_page, corr_element)
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?)");
         $statement -> execute($prefill);
 
     }
@@ -196,27 +308,3 @@ class Updates {
 }
 
 new Updates();
-
-
-        // $type = (function ($component) {
-
-        //     $res = [
-        //         'data' => [],
-        //         'attributes' => []
-        //     ];
-
-        //     foreach (json_decode($component['data'], True) as $data) {
-        //         if (strlen($data) > 60) {
-        //             // Vytvoř textarea form
-        //             echo 'Textarea';
-        //             continue;
-        //         }
-        //         echo 'Text_input';
-        //     }
-
-        //     foreach(json_decode($component['attributes'], True) as $attribute) {
-        //         echo $attribute;
-        //     } 
-
-        // })($component);
-

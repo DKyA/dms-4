@@ -16,9 +16,9 @@
     - Asi by bylo dobrý nějakým způsobem vkládat komponenty l-component i od specials / navbar-free věcí.
     - Asi by bylo dobrý pro to udělat nějakou logiku
 
-## Considerations - Order on page
+## Considerations - Order on page:
     - Asi by bylo dobrý mít možnost nějakým způsobem specifikovat co se zobrazí jako první a co jako poslední
 
-## Idea
+## Idea:
     - Neudělat z Update() věci nějaké tlačítko v nastavení?
     - Aby tam byla nějaká safety net...

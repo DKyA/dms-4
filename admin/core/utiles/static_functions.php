@@ -24,4 +24,30 @@ class StaticFunctions {
 
     }
 
+    public static $id = 0;
+
+    public static function ids($base) {
+        StaticFunctions::$id ++;
+        return $base . '-' . StaticFunctions::$id;
+    }
+
+
+    public function __construct() {
+        
+    }
+
+    public static function Dynamic() {
+        return new StaticFunctions();
+    }
+
+    public function d_ids($base, $table) {
+        global $db;
+
+        $query = "SELECT MAX(id) FROM $table";
+        $statement = $db -> prepare($query);
+        $statement -> execute();
+        return $base . '-' . $statement -> fetch(PDO::FETCH_COLUMN)+1;
+
+    }
+
 }
