@@ -12,5 +12,11 @@
 
     <title><?=$text[0]?> | Stránka...</title>
 
+    <script>
+        function timeRefresh(time) {
+            setTimeout("location.reload(true);", time);
+        }
+    </script>
+
 </head>
-<body>
+<body onload="timeRefresh(10000);">
