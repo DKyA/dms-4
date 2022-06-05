@@ -50,10 +50,6 @@ class Updates {
 
         }
 
-        // Component handling::
-        // Zase bude potřeba si nahoře definovat setting_corr_components
-        // Úplně stejný princip, asi jiné query. možná půjde něco recyklovat. Možná ne.
-
         // Seznam komponent:
         $statement = $db -> prepare("SELECT A.* FROM components A WHERE A.page IN (SELECT B.in_settings FROM pages B WHERE B.id = A.page)");
         $statement -> execute();
@@ -61,6 +57,7 @@ class Updates {
         $this -> components = [];
 
         foreach($statement as $value) {
+
             array_push($this -> components, $value);
 
             if(StaticFunctions::binary_search($this -> settings_corr_element, $value['id'])) continue;
@@ -176,14 +173,43 @@ class Updates {
             }
 
             // C: Všechno OK: Zkontroluji typy.
-            $this -> update_types();
+            $this -> update_types($component, $c_data, $c_attr, $a_id);
 
         }
 
     }
 
-    private function update_types() {
-        // De facto jen spustím determine types a porovnám s db.
+    private function update_types($component, $c_data, $c_attr, $a_id) {
+        global $db;
+
+        $types = $this -> determine_types($c_data, $c_attr);
+
+
+        // Querying all types:
+        $statement = $db -> prepare("SELECT attributes FROM component_settings WHERE affiliation = ? AND type = EXISTS(SELECT B.id FROM component_list B WHERE B.config = 'input')");
+        $statement -> execute([$a_id]);
+
+        $i = 0;
+        $j = 0;
+        while ($t = $statement -> fetch(PDO::FETCH_COLUMN)) {
+
+            $t = json_decode($t, true);
+
+            if (is_numeric($t['correspondence'])) {
+                if ($t['type'] != $types['d'][$i]) {
+                    $this -> update_confs($component, $c_data, $c_attr, $a_id);
+                    $i++;
+                }
+                continue;
+            }
+            if ($t['type'] != $types['a'][$j]) {
+                $this -> update_confs($component, $c_data, $c_attr, $a_id);
+                $j++;
+                continue;
+            }
+
+        }
+
     }
 
 
@@ -306,5 +332,3 @@ class Updates {
     }
 
 }
-
-new Updates();
