@@ -53,6 +53,8 @@ class Module {
             'api' => '',
             'link' => '',
             'placeholder' => '',
+            'href' => '',
+            'title' => '',
         ];
 
         if (!$attributes) return;
@@ -91,7 +93,7 @@ class Module {
                     $res[$k] = "{$k}='{$v}'";
                 case 'correspondence':
                     $p = (is_numeric($v)) ? 'text' : $v;
-                    $res['placeholder'] = "placeholder = \"Použije se jako {$p}\"";
+                    $res['placeholder'] = "placeholder=\"Použije se jako {$p}\"";
 
                 default:
 

@@ -82,7 +82,7 @@ class Updates {
             StaticFunctions::Dynamic() -> d_ids("{$page['ref']}-setup", "component_settings"),
             NULL,
             json_encode(["Stránka {$page['name']}"]),
-            json_encode(['type' => 'settings', 'link' => "/admin/categories/{$page['ref']}"]),
+            json_encode(['type' => 'settings', 'link' => "/admin/categories/{$page['ref']}/", 'title' => 'Podívat se na stránku']),
             $page['id'],
             NULL
         ];
@@ -135,7 +135,7 @@ class Updates {
             StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-setup", "component_settings"),
             $affiliation,
             json_encode(["Komponenta {$name}"]),
-            json_encode(['type' => 'sub_settings', 'link' => $link]), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
+            json_encode(['type' => 'sub_settings', 'link' => $link, 'title' => 'Podívat se na stránku']), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
             NULL,
             $component['id']
         ];
