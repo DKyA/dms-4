@@ -22,3 +22,6 @@
 ## Idea:
     - Neudělat z Update() věci nějaké tlačítko v nastavení?
     - Aby tam byla nějaká safety net...
+
+## Reminder:
+    - V každém případě udělat 1 formulář = 1 kategorie (zvlášť data a attributes!!!)

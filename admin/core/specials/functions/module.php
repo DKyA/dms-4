@@ -52,6 +52,7 @@ class Module {
             'level' => '',
             'api' => '',
             'link' => '',
+            'placeholder' => '',
         ];
 
         if (!$attributes) return;
@@ -77,15 +78,23 @@ class Module {
                         $res[$k] = 1;
                         break;
                     }
-                case 'style' | 'class' | 'rel':
+                case 'style':
+                case 'class':
+                case 'rel':
                     $res[$k] = $v;
                     break;
-                case 'link' | 'href':
-                    $res[$k] = "href = '{$v}'";
+                case 'link':
+                case 'href':
+                    $res['link'] = "href='{$v}'";
                     break;
+                case 'value':
+                    $res[$k] = "{$k}='{$v}'";
+                case 'correspondence':
+                    $p = (is_numeric($v)) ? 'text' : $v;
+                    $res['placeholder'] = "placeholder = \"Použije se jako {$p}\"";
 
                 default:
-                    
+
 
                     $res[$k] = "{$k}='{$v}'";
             }

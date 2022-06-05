@@ -71,14 +71,18 @@ class Updates {
     }
 
 
-    private function update_page_accordions($page) {
+    public function update_page_accordions($page) {
+        global $db;
+
+        $statement = $db -> prepare("DELETE FROM component_settings WHERE corr_page = ?");
+        $statement -> execute([$page['id']]);
 
         $prefill = [
             7,
             StaticFunctions::Dynamic() -> d_ids("{$page['ref']}-setup", "component_settings"),
             NULL,
             json_encode(["Stránka {$page['name']}"]),
-            json_encode(['type' => 'settings']),
+            json_encode(['type' => 'settings', 'link' => "/admin/categories/{$page['ref']}"]),
             $page['id'],
             NULL
         ];
@@ -89,6 +93,7 @@ class Updates {
 
 
     private function update_components($component) {
+        global $db;
         // Actually, tady bude sub-accordion...
 
         if (!$component['data']) {
@@ -118,13 +123,19 @@ class Updates {
 
         })($component);
 
+        // Prepare link:
+        $statement = $db -> prepare("SELECT ref FROM pages WHERE autoplace != 0 AND id = EXISTS(SELECT B.page FROM components B WHERE B.ref = ?)");
+        $statement -> execute([$component['ref']]);
+
+        $link = "/admin/categories/{$statement -> fetch(PDO::FETCH_COLUMN)}/#{$component['ref']}";
+
 
         $prefill = [
             7,
             StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-setup", "component_settings"),
             $affiliation,
             json_encode(["Komponenta {$name}"]),
-            json_encode(['type' => 'sub_settings']), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
+            json_encode(['type' => 'sub_settings', 'link' => $link]), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
             NULL,
             $component['id']
         ];
@@ -333,4 +344,5 @@ class Updates {
 
 }
 
-new Updates();
+// global $db;
+$updates = new Updates();

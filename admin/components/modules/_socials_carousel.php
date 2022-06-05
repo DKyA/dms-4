@@ -9,7 +9,7 @@ $nested => další komponenty
 */
 ?>
 
-<div class="c-card_carousel">
+<div class="c-card_carousel" id="<?=$id?>">
     <p class="c-card_carousel__caption">
         <?=$data[0]?>
     </p>
