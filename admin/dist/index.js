@@ -22,6 +22,15 @@ function last(arr, n = 1) {
         return arr[arr.length - 1];
     return arr.filter((_, index) => arr.length - index <= n);
 }
+const accordions = qsa("[accordion-selector]");
+const buttons = qsa("[accordion-toggle]");
+buttons.forEach((b, i) => {
+    b.addEventListener("pointerdown", (e) => {
+        let a = accordions[i];
+        a.classList.toggle(a.classList[0] + '--active');
+        b.classList.toggle(b.classList[0] + '--active');
+    });
+});
 class Card {
     constructor(card) {
         this.card = card;

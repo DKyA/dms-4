@@ -1,0 +1,117 @@
+.c-accordion {
+
+	$self: &;
+
+	@include flex(column, center, center);
+	width: 100%;
+
+	box-shadow: $base_shadow;
+
+	transition: max-height .3s ease-in-out;
+
+	&--sub_settings {
+
+		& #{$self}__self {
+			background-color: color('white');
+		}
+
+	}
+
+	&--active {
+		& #{$self}__body {
+			display: flex;
+		}
+	}
+
+	&__self {
+
+		@include flex(column, center, center);
+
+		padding: space(2) space(4);
+		width: 100%;
+
+		background-color: color('white');
+
+		transition: max-height .3s ease-in-out;
+
+	}
+
+	&__headbar {
+
+		width: 100%;
+		padding: space(2);
+		@include flex(row, space-between, center);
+		border-bottom: 2px solid color('black');
+
+	}
+
+	&__legend {
+		@include flex(row, center, center);
+	}
+
+	&__link {
+		color: color(dimmed);
+		text-decoration: none;
+		margin-right: space(2);
+
+		@include flex(row, center, center);
+
+		& > img {
+
+			filter: invert(50%);
+			transition: filter .2s ease-in-out;
+
+		}
+
+		&:hover, &:focus {
+			& > img {
+				filter: invert(0%);
+			}
+		}
+
+	}
+
+	&__control {
+
+		border: none;
+		outline: none;
+		background-color: transparent;
+
+		color: color('dimmed');
+
+		margin-left: space(2);
+		@include flex(row, center, center);
+
+		cursor: pointer;
+
+		& > img {
+
+			filter: invert(50%);
+			transition: filter .2s ease-in-out,
+						transform .3s ease-in-out;
+
+		}
+
+		&:hover, &:focus {
+			& > img {
+				filter: invert(0%);
+			}
+		}
+
+		&--active {
+			& > img {
+				transform: rotateX(180deg);
+			}
+		}
+
+	}
+
+	&__body {
+
+		@include flex(column, space-evenly, center);
+		display: none;
+		padding: space(2) 0;
+
+	}
+
+}

@@ -2,8 +2,8 @@
 
     $self: &;
 
-    width: 90%;
-    height: 100vh;
+    width: 80%;
+    height: 100%;
 
     position: fixed;
     top: 0;
@@ -18,7 +18,7 @@
 
     &--visible {
 
-        right: 10%;
+        right: 20%;
 
     }
 
