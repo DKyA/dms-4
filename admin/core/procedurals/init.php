@@ -32,9 +32,6 @@ class Component extends Module {
 
         $this -> data = $statement -> fetch(PDO::FETCH_ASSOC);
 
-        // Error hláška, pokud by se stalo, že bych se pokoušel zanestit něco, co zanestitelné není.
-        if ($this -> data['nestable'] and $this -> original['affiliation']) die("Critical error, {$this -> data['config']} is not nestable, child given!");
-
     }
 
     private function create() {
@@ -63,14 +60,18 @@ class Component extends Module {
     }
 
     public function get_subcomponents() {
-        global $db;
+        global $db, $PI;
 
         $this -> nested = [];
-        $statement = $db -> prepare("SELECT * FROM components WHERE affiliation = ?");
+        if ($PI -> ref == 'settings') {
+            $statement = $db -> prepare("SELECT * FROM component_settings WHERE affiliation = ?");
+        }
+        else {
+            $statement = $db -> prepare("SELECT * FROM components WHERE affiliation = ?");
+        }
         $statement -> execute([$this -> original['id']]);
 
         foreach ($statement as $row) {
-
             array_push($this -> nested, new Component($row));
 
         }
@@ -79,9 +80,14 @@ class Component extends Module {
 
 }
 
-
-$statement = $db -> prepare("SELECT * FROM components WHERE page = ?");
-$statement -> execute([$PI -> info['id']]);
+if ($PI -> ref == 'settings') {
+    $statement = $db -> prepare("SELECT * FROM component_settings");
+    $statement -> execute();
+}
+else {
+    $statement = $db -> prepare("SELECT * FROM components WHERE page = ?");
+    $statement -> execute([$PI -> info['id']]);
+}
 
 $components = [];
 

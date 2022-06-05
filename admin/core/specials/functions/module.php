@@ -38,6 +38,7 @@ class Module {
     }
 
     protected function inner_attributes($attributes) {
+        global $PI;
         $res = [
             'class' => '',
             'type' => '',
@@ -82,7 +83,10 @@ class Module {
                 case 'link' | 'href':
                     $res[$k] = "href = '{$v}'";
                     break;
+
                 default:
+                    
+
                     $res[$k] = "{$k}='{$v}'";
             }
 

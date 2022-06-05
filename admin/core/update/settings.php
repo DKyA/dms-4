@@ -124,7 +124,7 @@ class Updates {
             StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-setup", "component_settings"),
             $affiliation,
             json_encode(["Komponenta {$name}"]),
-            json_encode(['type' => 'sub_settings', 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))]),
+            json_encode(['type' => 'sub_settings']), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
             NULL,
             $component['id']
         ];
@@ -332,3 +332,5 @@ class Updates {
     }
 
 }
+
+new Updates();
