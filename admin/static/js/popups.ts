@@ -14,7 +14,7 @@ function ipu() {
         bars[i].addEventListener("click", () => {
 
             if(popups[i].classList.contains(active)) {
-                close(popups, i);
+                close_p(popups, i);
             }
             else {
 
@@ -23,7 +23,7 @@ function ipu() {
                         continue;
                     }
                     if (popups[j].classList.contains(active)) {
-                        close(popups, j);
+                        close_p(popups, j);
                     }
                 }
 
@@ -41,14 +41,14 @@ function init_close_btn(popups: NodeListOf<Element>) {
     let close_btns = document.querySelectorAll(".c-infobar_pu__close");
     for(let i = 0; i < close_btns.length; i++) {
         close_btns[i].addEventListener("click", () => {
-            close(popups, i)
+            close_p(popups, i)
         });
     }
 
 }
 
 
-function close(popups: NodeListOf<Element>, i: number) {
+function close_p(popups: NodeListOf<Element>, i: number) {
     console.log(i);
     popups[i].classList.remove(active);
     popups[i].classList.add(hiding);
