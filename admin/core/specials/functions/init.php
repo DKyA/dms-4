@@ -15,6 +15,10 @@ require $path['core'] . 'apply_components.php';
 // Okej, tohle je potřeba trošku víc promyslet a to se mi nechce dělat po obědě... :()
 
 
+?>
+<main class="l-main">
+<?php
+
 if ($PI -> info['special']) {
     if (!isset($template)) {
         $template = 'blob_middle';
@@ -23,3 +27,5 @@ if ($PI -> info['special']) {
     creator($file , '<?php apply_module($layout);?>');
     require $file;
 }
+?>
+</main>

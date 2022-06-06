@@ -102,7 +102,6 @@ function apply_module($components) {
 
     if (!isset($components)) return;
     // Konec...
-
     foreach ($components as $component) {
 
         global $path, $text;
@@ -115,11 +114,11 @@ function apply_module($components) {
 
         if ($component -> data['nestable'] === 1) {
             ?>
-                <div class="l-component">
+                <section class="l-component">
             <?php
             require $path['components'] . "modules/_{$dest}.php";
             ?>
-                </div>
+                </section>
             <?php
             continue;
         }
@@ -127,5 +126,9 @@ function apply_module($components) {
     }
 
 }
-
+?>
+<main class="l-main">
+<?php 
 apply_module($components);
+?>
+</main>
