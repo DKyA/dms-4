@@ -64,7 +64,7 @@ class Module {
             switch($k) {
                 case 'required':
                     if ($v) {
-                        $res[$k] = $k;
+                        $res[$k] = $k . ' aria-required="true"';
                         break;
                     }
                 case 'type':
