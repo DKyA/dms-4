@@ -10,25 +10,27 @@ $nested => další komponenty
 
 ?>
 
-<section class="c-accordion c-accordion<?=$attributes['class']?>" accordion-selector>
-    <div class="c-accordion__self">
-    <div class="c-accordion__headbar">
-        <legend class="c-accordion__legend">
-            <a <?=$attributes['link']?> class="c-accordion__link" <?=$attributes['title']?> target="_blank">
-                <img src="/admin/static/icons/link-45deg.svg" alt="Link na komponentu">
-            </a>
-            <h3><?=$data[0]?></h3>
-        </legend>
-        <button class="c-accordion__control" accordion-toggle title="Rozbalit obsah">
-            <img src="/admin/static/icons/chevron-down.svg" alt="Rozbalit accordion">
-        </button>
-    </div>
-    <div class="c-accordion__body">
-        <?php
-            apply_module($nested);
-        ?>
-    </div>
+<div class="c-accordion" accordion-self>
+    <fieldset class="c-accordion__tab">
+        <input type="checkbox" class="c-accordion__controller" role="button" id="<?= $id ?>">
+        <label for="<?= $id ?>" class="c-accordion__clicker" role="button" aria-labelledby="<?=$id?>" accordion-button>
+            <legend class="c-accordion__legend">
+                <div class="c-accordion__headlines">
+                    <a <?= $attributes['link'] ?> class="c-accordion__link" <?= $attributes['title'] ?> target="_blank" aria-label="Link na komponentu">
+                        <img src="/admin/static/icons/link-45deg.svg" alt="Link na komponentu">
+                    </a>
+                    <h4><?= $data[0] ?></h4>
+                </div>
 
-    </div>
-</section>
-
+                <img class="c-accordion__unwrap-icon" src="/admin/static/icons/chevron-down.svg" alt="Rozbalit accordion">
+            </legend>
+        </label>
+        <div class="c-accordion__body" accordion-body>
+            <div class="c-accordion__wrapper" accordion-last>
+                <?php
+                apply_module($nested);
+                ?>
+            </div>
+        </div>
+    </fieldset>
+</div>

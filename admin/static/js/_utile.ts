@@ -27,3 +27,6 @@ function last(arr:Array<any>, n = 1) {
     return arr.filter((_, index) => arr.length - index <= n)
 }
 
+function qsae(selector:string, parent = document) {
+    return[...parent.querySelectorAll<HTMLElement>(selector)];
+}

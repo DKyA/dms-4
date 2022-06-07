@@ -1,116 +1,123 @@
+
 .c-accordion {
 
 	$self: &;
 
-	@include flex(column, center, center);
-	width: 100%;
+	width: 95%;
+	max-width: 100%;
+	overflow: hidden;
+	margin: space(2) auto;
 
+	background-color: color(llgrey);
 	box-shadow: $base_shadow;
 
-	transition: max-height .3s ease-in-out;
+	&--empty {
 
-	&--sub_settings {
+		display: none;
 
-		& #{$self}__self {
-			background-color: color('white');
+	}
+
+	&--last {
+
+		& #{$self}__wrapper {
+
+			padding: space(1);
+			@include flex(column);
+
 		}
 
 	}
 
-	&--active {
-		& #{$self}__body {
-			display: flex;
-		}
+	&__tab {
+
+		border: none;
+
 	}
 
-	&__self {
+	&__clicker {
 
-		@include flex(column, center, center);
-
-		padding: space(2) space(4);
 		width: 100%;
+
+		box-shadow: $base_shadow;
+
+		@include flex(row, center, center);
 
 		background-color: color('white');
+		padding: space(1) space(2);
 
-		transition: max-height .3s ease-in-out;
+		transition: max-height .5s ease-in,
+					background-color .3s ease-in-out;
+
+		&:hover, &:focus {
+
+			background-color: color(llgrey);
+
+		}
 
 	}
 
-	&__headbar {
+	&__controller {
 
-		width: 100%;
-		padding: space(2);
-		@include flex(row, space-between, center);
-		border-bottom: 2px solid color('black');
+		display: none;
+		&:checked {
+			& ~ #{$self}__clicker {
+
+				& #{$self}__unwrap-icon {
+					transform: rotateX(180deg);
+				}
+
+			}
+			& ~ #{$self}__body {
+				max-height: 100vh;
+			}
+
+		}
 
 	}
 
 	&__legend {
-		@include flex(row, center, center);
+
+		@include flex(row, space-between, center);
+		width: 100%;
+
+	}
+
+	&__headlines {
+
+		@include flex(row, flex-start, center);
+
 	}
 
 	&__link {
-		color: color(dimmed);
-		text-decoration: none;
-		margin-right: space(2);
 
-		@include flex(row, center, center);
+		@include flex();
+		margin-right: space(1);
 
-		& > img {
+		filter: invert(50%);
+		transition: filter .3s ease-in-out;
 
-			filter: invert(50%);
-			transition: filter .2s ease-in-out;
+		&:hover {
 
-		}
+			filter: invert(20%);
 
-		&:hover, &:focus {
-			& > img {
-				filter: invert(0%);
-			}
 		}
 
 	}
 
-	&__control {
-
-		border: none;
-		outline: none;
-		background-color: transparent;
-
-		color: color('dimmed');
+	&__unwrap-icon {
 
 		margin-left: space(2);
-		@include flex(row, center, center);
+		transform: rotateX(0);
 
-		cursor: pointer;
-
-		& > img {
-
-			filter: invert(50%);
-			transition: filter .2s ease-in-out,
-						transform .3s ease-in-out;
-
-		}
-
-		&:hover, &:focus {
-			& > img {
-				filter: invert(0%);
-			}
-		}
-
-		&--active {
-			& > img {
-				transform: rotateX(180deg);
-			}
-		}
+		transition: transform .3s ease-in-out;
 
 	}
 
 	&__body {
 
-		@include flex(column, space-evenly, center);
-		display: none;
-		padding: space(2) 0;
+		max-height: 0px;
+		overflow: hidden;
+		transition: max-height .5s ease-out;
 
 	}
 
