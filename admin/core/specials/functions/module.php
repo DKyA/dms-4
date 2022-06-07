@@ -91,12 +91,15 @@ class Module {
                     break;
                 case 'value':
                     $res[$k] = "{$k}='{$v}'";
+                    break;
                 case 'correspondence':
                     $p = (is_numeric($v)) ? 'text' : $v;
                     $res['placeholder'] = "placeholder=\"Použije se jako {$p}\"";
+                    break;
 
+                case 'title':
+                    $res['aria-label'] = "aria-label='$v'";
                 default:
-
 
                     $res[$k] = "{$k}='{$v}'";
             }
