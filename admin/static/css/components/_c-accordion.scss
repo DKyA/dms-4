@@ -45,7 +45,7 @@
 		background-color: color('white');
 		padding: space(1) space(2);
 
-		transition: max-height .5s ease-in,
+		transition: max-height .3s ease-in,
 					background-color .3s ease-in-out;
 
 		&:hover, &:focus {
@@ -59,19 +59,6 @@
 	&__controller {
 
 		display: none;
-		&:checked {
-			& ~ #{$self}__clicker {
-
-				& #{$self}__unwrap-icon {
-					transform: rotateX(180deg);
-				}
-
-			}
-			& ~ #{$self}__body {
-				max-height: 100vh;
-			}
-
-		}
 
 	}
 
@@ -117,7 +104,7 @@
 
 		max-height: 0px;
 		overflow: hidden;
-		transition: max-height .5s ease-out;
+		transition: max-height .3s ease-out;
 
 	}
 

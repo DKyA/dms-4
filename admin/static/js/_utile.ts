@@ -30,3 +30,31 @@ function last(arr:Array<any>, n = 1) {
 function qsae(selector:string, parent = document) {
     return[...parent.querySelectorAll<HTMLElement>(selector)];
 }
+
+function throttle(cb: Function, delay = 1000) {
+    let should_wait = false;
+    let waiting_args: Array<any>;
+    const timeout_f = () => {
+        if (waiting_args == null) {
+            should_wait = false;
+        }
+        else {
+            cb(...waiting_args);
+            waiting_args = null;
+            setTimeout(timeout_f, delay);
+        }
+    }
+
+    return (...args: any) => {
+
+        if (should_wait) {
+            waiting_args = args;
+            return;
+        }
+
+        cb(...args)
+        should_wait = true;
+
+        setTimeout(timeout_f, delay);
+    }
+}
