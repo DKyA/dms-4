@@ -15,18 +15,16 @@ def styleIt():
             continue
 
         all.append(file)
-        if file == '.DS_Store':
-            continue
+        if file == '.DS_Store': continue
         subdir = os.listdir(root_dir + file + '/')
         endpoints = list()
 
         local = False
-        with open(f"{root_dir}{main}", 'w', encoding='utf-8') as m_file:
-            for item in subdir:
-                if item == '_index.scss':
-                    local = item
-                    continue
-                endpoints.append(item)
+        for item in subdir:
+            if item == '_index.scss':
+                local = item
+                continue
+            endpoints.append(item)
 
         if local:
             with open(f"{root_dir}{file}/{local}", 'w', encoding='utf-8') as l_file:
@@ -40,6 +38,7 @@ def styleIt():
         functions = all.pop(functions_pos)
         all.insert(0, functions)
         for one in all:
+            if one == '.DS_Store': continue
             file.writelines(f"@import './{one}/index';\n")
 
     print("Styles updated successfully")
