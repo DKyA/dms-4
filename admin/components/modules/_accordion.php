@@ -24,12 +24,10 @@ $nested => další komponenty
                 <img class="c-accordion__unwrap-icon" src="/admin/static/icons/chevron-down.svg" alt="Rozbalit accordion" accordion-icon>
             </legend>
         </button>
-        <div class="c-accordion__body" accordion-body>
-            <div class="c-accordion__wrapper" accordion-last>
-                <?php
-                apply_module($nested);
-                ?>
-            </div>
+        <div class="c-accordion__body" accordion-body accordion-last>
+            <?php
+            apply_module($nested);
+            ?>
         </div>
     </fieldset>
 </div>
