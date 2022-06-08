@@ -3,13 +3,17 @@
     height: 24px;
 
     box-sizing: content-box;
-    padding: space(2);
+    padding: space(2) space(1);
 
     background-color: white;
 
     box-shadow: $base_shadow;
 
     @include flex(row, space-between, center);
+
+    @media (min-width: breakpoint(sm)) {
+        padding: space(2);
+    }
 
     &__left, &__right {
 
@@ -50,12 +54,20 @@
 
     &__username {
 
-        margin-right: space(1);
-        padding-top: 1px;
+        display: none;
 
-        font-size: .9em;
-        line-height: .9em;
-        color: color(light-black);
+        @media (min-width: breakpoint(sm)) {
+
+            display: block;
+
+            margin-right: space(1);
+            padding-top: 1px;
+
+            font-size: .9em;
+            line-height: .9em;
+            color: color(light-black);
+
+        }
 
     }
 
@@ -76,5 +88,14 @@
         outline: none;
 
     }
+
+}
+
+.temp-circle {
+
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
 
 }

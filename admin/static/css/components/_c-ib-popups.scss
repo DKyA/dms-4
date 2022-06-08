@@ -1,5 +1,7 @@
 .c-infobar_pu {
 
+    $self: &;
+
     background-color: color('white');
 
     padding: space(2);
@@ -27,7 +29,7 @@
 
         position: absolute;
         top: -5px;
-        right: 30px;
+        right: 40px;
 
         transform: rotate(45deg);
 
@@ -37,6 +39,15 @@
 
         top: 65px;
         right: 5px;
+
+        &::after {
+
+            @media (min-width: breakpoint(sm)) {
+                right: 40px;
+            }
+            right: 10px;
+
+        }
 
     }
 
