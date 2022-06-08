@@ -43,6 +43,10 @@ class Accordion {
     throttled_ac_animation_body(f:Element, i:number, ab:Element[]) {
         const body = qsae("[accordion-body]")[i];
         const active = "c-accordion--active";
+        const icon = qsae("[accordion-icon]")[i];
+
+        icon.classList.toggle(icon.classList[0] + '--active');
+
         if (f.classList.contains(active)) {
             f.classList.toggle(active);
             body.classList.toggle("c-accordion__body--no-animation");
@@ -57,7 +61,7 @@ class Accordion {
             body.style.maxHeight = body.scrollHeight + 'px';
             setTimeout(() => {
                 body.style.maxHeight = '100vh';
-            }, 300)
+            }, 210)
         }
     }
 

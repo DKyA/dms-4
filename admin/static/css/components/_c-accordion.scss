@@ -11,6 +11,22 @@
 	background-color: color(llgrey);
 	box-shadow: $base_shadow;
 
+	@media (min-width: breakpoint(sm)) {
+
+		width: 80%;
+
+		& #{$self} {
+			width: 90%;
+		}
+
+	}
+
+	@media (min-width: breakpoint(md)) {
+
+		width: 75%;
+
+	}
+
 	&--empty {
 
 		display: none;
@@ -44,11 +60,22 @@
 
 		background-color: color('white');
 		padding: space(1) space(2);
+		border: none;
 
-		transition: max-height .3s ease-in,
-					background-color .3s ease-in-out;
+		cursor: pointer;
 
-		&:hover, &:focus {
+		text-align: left;
+
+		transition: max-height .2s ease-in,
+					background-color .2s ease-in-out;
+
+		@media (min-width: breakpoint(sm)) {
+
+			padding: space(2.5) space(3);
+
+		}
+
+		&:hover {
 
 			background-color: color(llgrey);
 
@@ -81,7 +108,7 @@
 		margin-right: space(1);
 
 		filter: invert(50%);
-		transition: filter .3s ease-in-out;
+		transition: filter .2s ease-in-out;
 
 		&:hover {
 
@@ -96,7 +123,13 @@
 		margin-left: space(2);
 		transform: rotateX(0);
 
-		transition: transform .3s ease-in-out;
+		transition: transform .2s ease-in-out;
+
+		&--active {
+
+			transform: rotateX(180deg);
+
+		}
 
 	}
 
@@ -104,7 +137,7 @@
 
 		max-height: 0px;
 		overflow: hidden;
-		transition: max-height .3s ease-out;
+		transition: max-height .2s ease-out;
 
 		&--no-animation {
 
