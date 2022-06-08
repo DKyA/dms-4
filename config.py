@@ -1,4 +1,5 @@
 import os
+from turtle import end_poly
 
 def styleIt():
     root_dir = './admin/static/css/'
@@ -14,6 +15,8 @@ def styleIt():
             continue
 
         all.append(file)
+        if file == '.DS_Store':
+            continue
         subdir = os.listdir(root_dir + file + '/')
         endpoints = list()
 
