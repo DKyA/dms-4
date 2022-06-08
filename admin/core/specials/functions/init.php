@@ -12,7 +12,6 @@ foreach ($modules as $key => $module) {
 }
 
 require $path['core'] . 'apply_components.php';
-// Okej, tohle je potřeba trošku víc promyslet a to se mi nechce dělat po obědě... :()
 
 
 ?>

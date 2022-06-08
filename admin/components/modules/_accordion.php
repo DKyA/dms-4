@@ -15,8 +15,8 @@ $nested => další komponenty
         <button for="<?= $id ?>" class="c-accordion__clicker" aria-label="Otevřít sekci nastavení" accordion-button>
             <legend class="c-accordion__legend">
                 <div class="c-accordion__headlines">
-                    <a <?= $attributes['link'] ?> class="c-accordion__link" <?= $attributes['title'] ?> target="_blank" aria-label="Link na komponentu">
-                        <img src="/admin/static/icons/link-45deg.svg" alt="Link na komponentu">
+                    <a <?= $attributes['link'] ?> class="c-accordion__link" <?= $attributes['title'] ?> target="_blank" <?=$attributes['aria-label']?>>
+                        <img src="/admin/static/icons/link-45deg.svg" alt="<?= $attributes['title'] ?>">
                     </a>
                     <h4><?= $data[0] ?></h4>
                 </div>

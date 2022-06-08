@@ -13,6 +13,8 @@ class Updates {
     private $settings_corr_page;
     private $settings_corr_element;
 
+    private $accordion_id;
+
     public function __construct() {
         global $db;
 
@@ -34,6 +36,11 @@ class Updates {
                 array_push($this -> settings_corr_element, $row['corr_element']);
             }
         }
+
+        // Obtaining accordion id
+        $statement = $db -> prepare("SELECT id FROM component_list WHERE config = ?");
+        $statement -> execute(['accordion']);
+        $this -> accordion_id = $statement -> fetch(PDO::FETCH_COLUMN);
 
         // Querying pages for wrappers
         $statement = $db -> prepare("SELECT id, ref, name FROM pages WHERE in_settings = 1");
@@ -78,7 +85,7 @@ class Updates {
         $statement -> execute([$page['id']]);
 
         $prefill = [
-            7,
+            $this -> accordion_id,
             StaticFunctions::Dynamic() -> d_ids("{$page['ref']}-setup", "component_settings"),
             NULL,
             json_encode(["Stránka {$page['name']}"]),
@@ -130,17 +137,18 @@ class Updates {
         $link = "/admin/categories/{$statement -> fetch(PDO::FETCH_COLUMN)}/#{$component['ref']}";
 
 
-        $prefill = [
-            7,
-            StaticFunctions::Dynamic() -> d_ids("{$component['ref']}-setup", "component_settings"),
-            $affiliation,
-            json_encode(["Komponenta {$name}"]),
-            json_encode(['type' => 'sub_settings', 'link' => $link, 'title' => 'Podívat se na stránku']), // , 'values' => array_merge(json_decode($component['data'], True), json_decode($component['attributes'], True))
-            NULL,
-            $component['id']
-        ];
+        // First inserting a form::
+            // Everything will have
+                // a delete last / all
+                // Save
+                // Add new one
+                // ...
 
-        $this -> inserter($prefill);
+        $data = ["Komponenta {$name}"];
+        $attributes = ['type' => 'sub_settings', 'link' => $link, 'title' => 'Podívat se na komponentu'];
+        $inserted_id = $this -> insert_new_element($affiliation, 'accordion', $component, $data, $attributes, 'setup');
+
+        $this -> insert_new_element($inserted_id, 'utile-form', $component, [], ['type' => 'sub-settings'], 's-form');
 
     }
 
@@ -157,13 +165,12 @@ class Updates {
 
             // Tyhle čísla porovnat s hodnotami v tabulce.
             // A: Nenajdu match: vytvořím novou
-            $statement = $db -> prepare("SELECT id FROM component_settings WHERE corr_element = ? AND type = 7");
-            $statement -> execute([$component['id']]);
+            $statement = $db -> prepare("SELECT id FROM component_settings WHERE affiliation IN(SELECT id FROM component_settings WHERE corr_element = ? AND type = ?)");
+            $statement -> execute([$component['id'], $this -> accordion_id]);
 
             $a_id = $statement -> fetch(PDO::FETCH_COLUMN); // accordion id
 
             // Getting no of children:
-            // $statement = $db -> prepare("SELECT COUNT(*) FROM component_settings WHERE affiliation = ?");
             $statement = $db -> prepare("SELECT COUNT(*) FROM component_settings WHERE component_settings.affiliation = ? AND component_settings.type = EXISTS (SELECT * FROM component_list WHERE component_list.config = 'input')");
             $statement -> execute([$a_id]);
 
@@ -223,7 +230,6 @@ class Updates {
 
     }
 
-
     private function update_confs($component, $c_data, $c_attr, $a_id) {
         global $db;
         // Russian method. Regenerating.
@@ -262,7 +268,20 @@ class Updates {
     }
 
 
-    private function insert_new_element($a_id, $h_id, $component, $data, $attributes, $type) {
+        /**
+     * 
+     * 
+     * Inserts new element from given information
+     * @param int $a_id Affiliation;
+     * @param string $h_id Config komponenty podle tabulky component_list;
+     * @param array $component Daná komponenta;
+     * @param array $data Textové hodnoty;
+     * @param array $attributes Atributy k použití;
+     * @param string $type Typ komponenty, použit pro generaci ref;
+     * 
+     */
+
+    private function insert_new_element($a_id, $h_id, $component, $data, $attributes, $type): string {
         global $db;
 
         // Input id:
@@ -283,6 +302,9 @@ class Updates {
 
         $statement = $db -> prepare("INSERT INTO component_settings (affiliation, type, ref, data, attributes, corr_element) VALUES (?, ?, ?, ?, ?, ?)");
         $statement -> execute($dataset);
+
+        return $db -> lastInsertId();
+
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-function apply_modules($modules) {
+function apply_module($modules) {
     global $path;
     // Rekurzivní funkce, která bude vlastně procházet každým affiliation nodem stromu a dodávat dané komponenty.
     // $module je teda scope a musí se s ním tak pracovat
@@ -25,7 +25,7 @@ function apply_modules($modules) {
 
         $data = $module -> data;
         $attributes = $module -> attributes;
-        $modules = $module -> load_order;
+        $nested = $module -> load_order;
 
         creator(...$file_info);
         require $file_info[0];

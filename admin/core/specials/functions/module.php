@@ -69,7 +69,8 @@ class Module {
                     }
                 case 'type':
                     $res['class'] = "--{$v}";
-                    $res[$k] = "{$k}='{$v}'";
+                    $res['type+'] =  "{$k}='{$v}'";
+                    $res[$k] = $v;
                     break;
                 case 'level':
                     if ($v) {
