@@ -80,18 +80,6 @@ class Accordion {
                 return;
             }
 
-            let is_last = () => {
-                for (let c of last[i].children) {
-                    if (c.classList.contains("l-component")) return false;
-                }
-                return true;
-            }
-
-            if(is_last()) {
-                // There is no accordion, therefore I have to center contents;
-                a.classList.add("c-accordion--last");
-            }
-
         });
 
     }

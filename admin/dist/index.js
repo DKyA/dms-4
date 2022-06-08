@@ -109,16 +109,6 @@ class Accordion {
                 a.classList.add("c-accordion--empty");
                 return;
             }
-            let is_last = () => {
-                for (let c of last[i].children) {
-                    if (c.classList.contains("l-component"))
-                        return false;
-                }
-                return true;
-            };
-            if (is_last()) {
-                a.classList.add("c-accordion--last");
-            }
         });
     }
 }
