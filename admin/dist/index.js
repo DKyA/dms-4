@@ -82,10 +82,12 @@ class Accordion {
         const active = "c-accordion--active";
         if (f.classList.contains(active)) {
             f.classList.toggle(active);
+            body.classList.toggle("c-accordion__body--no-animation");
             body.style.maxHeight = body.scrollHeight + 'px';
             setTimeout(() => {
+                body.classList.toggle("c-accordion__body--no-animation");
                 body.style.maxHeight = 0 + 'px';
-            }, 300);
+            }, 50);
         }
         else {
             f.classList.toggle(active);

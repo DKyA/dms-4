@@ -106,6 +106,12 @@
 		overflow: hidden;
 		transition: max-height .3s ease-out;
 
+		&--no-animation {
+
+			transition: none;
+
+		}
+
 	}
 
 }
