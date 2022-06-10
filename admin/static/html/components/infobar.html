@@ -1,10 +1,10 @@
 <header class="c-infobar">
     <div class="c-infobar__left">
-        <button class="c-infobar__action c-infobar__js" title="Přehled oznámení" aria-label="Přehled oznámení">
+        <button class="c-infobar__action c-infobar__js" title="Přehled oznámení" aria-label="Přehled oznámení" aria-expanded="false">
             <img src="/admin/static/icons/bell.svg" alt="Ikona zvonku">
             <?// V případě plnosti bych tam dal bell-fill?>
         </button>
-        <button class="c-infobar__action c-infobar__js" title="Přehled zpráv" aria-label="Přehled zpráv">
+        <button class="c-infobar__action c-infobar__js" title="Přehled zpráv" aria-label="Přehled zpráv" aria-expanded="false">
             <img src="/admin/static/icons/envelope.svg" alt="Ikona poštovní obálky">
         </button>
         <a class="c-infobar__action" title="Vyhledávání" aria-label="Vyhledávání">
@@ -14,13 +14,13 @@
             <img src="/admin/static/icons/house.svg" alt="Ikona domečku">
         </a>
     </div>
-    <p class="c-infobar__center" role="heading">
+    <h1 class="c-infobar__center" aria-label="DMS, sekce <?=$PI -> name?>">
         <?=$PI -> name?>
-    </p>
-    <button class="c-infobar__right c-infobar__js">
-        <div class="c-infobar__username">
+    </h1>
+    <button class="c-infobar__right c-infobar__js" aria-label="Otevře sekci s rychlou správou uživatele" aria-expanded="false">
+        <p class="c-infobar__username">
             Daniel Kyndl
-        </div>
+        </p>
         <div class="c-infobar__profile-img">
             <div class="temp-circle"></div>
         </div>

@@ -429,9 +429,10 @@ const hiding = "c-infobar_pu--default";
 function ipu() {
     let bars = document.querySelectorAll(".c-infobar__js");
     let popups = document.querySelectorAll(".c-infobar_pu");
-    init_close_btn(popups);
+    init_close_btn(popups, bars);
     for (let i = 0; i < bars.length; i++) {
-        bars[i].addEventListener("click", () => {
+        bars[i].addEventListener("pointerdown", () => {
+            bars[i].ariaExpanded = (bars[i].ariaExpanded == 'true') ? 'false' : 'true';
             if (popups[i].classList.contains(active)) {
                 close_p(popups, i);
             }
@@ -452,10 +453,11 @@ function ipu() {
         });
     }
 }
-function init_close_btn(popups) {
+function init_close_btn(popups, bars) {
     let close_btns = document.querySelectorAll(".c-infobar_pu__close");
     for (let i = 0; i < close_btns.length; i++) {
         close_btns[i].addEventListener("click", () => {
+            bars[i].ariaExpanded = (bars[i].ariaExpanded == 'true') ? 'false' : 'true';
             close_p(popups, i);
         });
     }
