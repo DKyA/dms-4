@@ -1,0 +1,31 @@
+.a-headline {
+
+    $self: &;
+
+    padding-bottom: space(.5);
+    margin-bottom: space(.5);
+
+    &--setting-2 {
+
+        margin-bottom: space(1);
+        width: 100%;
+
+        @include flex(row, flex-start, center);
+
+        &:not(:first-child) {
+
+            padding-top: space(1);
+            border-top: 1px dotted color(dimmed);
+            margin-top: space(1.5);
+
+        }
+
+        #{$self}__self {
+
+            border-bottom: 2px solid color('black');
+
+        }
+
+    }
+
+}
