@@ -89,7 +89,7 @@ class Updates {
             StaticFunctions::Dynamic() -> d_ids("{$page['ref']}-setup", "component_settings"),
             NULL,
             json_encode(["Stránka {$page['name']}"]),
-            json_encode(['type' => 'settings', 'link' => "/admin/categories/{$page['ref']}/", 'title' => 'Podívat se na stránku']),
+            json_encode(['type' => 'settings', 'link' => "/admin/categories/{$page['ref']}/", 'title' => 'Podívat se na stránku', 'level' => '2']),
             $page['id'],
             NULL
         ];
@@ -145,7 +145,7 @@ class Updates {
                 // ...
 
         $data = ["Komponenta {$name}"];
-        $attributes = ['type' => 'sub_settings', 'link' => $link, 'title' => 'Podívat se na komponentu'];
+        $attributes = ['type' => 'sub_settings', 'link' => $link, 'title' => 'Podívat se na komponentu', 'level' => '3'];
         $inserted_id = $this -> insert_new_element($affiliation, 'accordion', $component, $data, $attributes, 'setup');
 
         $this -> insert_new_element($inserted_id, 'utile-form', $component, [], ['type' => 'sub-settings'], 's-form');

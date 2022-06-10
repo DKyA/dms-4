@@ -18,7 +18,7 @@ $nested => další komponenty
                     <a <?= $attributes['link'] ?> class="c-accordion__link" <?= $attributes['title'] ?> target="_blank" <?=$attributes['aria-label']?>>
                         <img src="/admin/static/icons/link-45deg.svg" alt="<?= $attributes['title'] ?>">
                     </a>
-                    <h4><?= $data[0] ?></h4>
+                    <h<?=$attributes['level']?>><?= $data[0] ?></h<?=$attributes['level']?>>
                 </div>
 
                 <img class="c-accordion__unwrap-icon" src="/admin/static/icons/chevron-down.svg" alt="Rozbalit accordion" accordion-icon>

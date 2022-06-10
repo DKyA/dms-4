@@ -13,7 +13,7 @@ $nested => další komponenty
 
 	<div class="c-u-form__s-controllers">
 		<button class="c-u-form__button c-u-form__button--danger" type="button" title="Odstranit prvek... (Otevře rozcestník)" aria-label="Odstranit prvek nastavení (otevře rozcestník)"></button>
-		<button class="c-u-form__button c-u-form__button--warning" type="submit" role="submit" title="Uložit" aria-label="Uloží nastavení"></button>
+		<button class="c-u-form__button c-u-form__button--warning" type="submit" title="Uložit data v sekci" aria-label="Uloží nastavení"></button>
 		<button class="c-u-form__button c-u-form__button--green" type="button" title="Přidat prvek... (Otevře rozcestník)" aria-label="Přidat prvek nastavení... (Otevře rozcestník)"></button>
 	</div>
 
